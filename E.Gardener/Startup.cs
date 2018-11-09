@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArduinoObserver;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -41,6 +42,14 @@ namespace E.Gardener
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+           Observable observable = new Observable();
+           Observer observer = new Observer("my name");
+           observer.Subscribe(observable);
+           services.AddSingleton<Observer>(observer);
+           services.AddSingleton<Observable>(observable);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

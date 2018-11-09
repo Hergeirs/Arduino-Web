@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO.Ports;
 using System.Linq;
 using System.Threading.Tasks;
+using ArduinoObserver;
 using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
 
@@ -10,10 +12,25 @@ namespace E.Gardener.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly Observer _observer;
+        private readonly Observable _observable;
+
+        public HomeController(Observer observer, Observable observable)
+        {
+            _observer = observer;
+            _observable = observable;
+        }
+
+
+
+
         public IActionResult Index()
         {
-            return View();
+            _observable.FetchData();
+            return View(_observer.data);
         }
+
+
 
         public IActionResult About()
         {
