@@ -25,16 +25,11 @@ namespace E.Gardener.Controllers
             _context = context;
         }
 
-
-
-
         public IActionResult Index()
         {
             _observable.FetchData();
             return View(_observer.data);
         }
-
-
 
         public IActionResult About()
         {
