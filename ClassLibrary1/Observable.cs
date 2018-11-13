@@ -15,7 +15,7 @@ namespace ArduinoObserver
             Observers = new List<IObserver<ArduinoData>>();
             _serialPort = new SerialPort
             {
-                PortName = "COM6",
+                PortName = "COM4",
                 BaudRate = 9600,
                 Parity = Parity.None,
                 DataBits = 8,
@@ -71,20 +71,20 @@ namespace ArduinoObserver
             _serialPort.WriteLine("hey");
             var data =  new ArduinoData()
             {
-                Moisture = uint.Parse(_serialPort.ReadLine()),
-                Temperature = uint.Parse(_serialPort.ReadLine())
+                Moisture = (uint) _serialPort.ReadByte(),
+                Temperature = _serialPort.ReadByte()
             };
-            TrackChanges(data);
+            Notify(data);
 
         }
 
 
-        public void TrackChanges(ArduinoData? data)
+        public void Notify(ArduinoData? data)
         {
             foreach (var observer in Observers)
             {
                 if (!data.HasValue)
-                    observer.OnError(new Exception("Notifying null data from arduino"));
+                    observer.OnError(new Exception("Notifying corrupt data from arduino"));
                 else
                     observer.OnNext(data.Value);
             }

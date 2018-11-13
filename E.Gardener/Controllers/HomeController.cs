@@ -5,8 +5,10 @@ using System.IO.Ports;
 using System.Linq;
 using System.Threading.Tasks;
 using ArduinoObserver;
+using E.Gardener.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
+using Repository;
 
 namespace E.Gardener.Controllers
 {
@@ -14,11 +16,13 @@ namespace E.Gardener.Controllers
     {
         private readonly Observer _observer;
         private readonly Observable _observable;
+        private readonly EGardenerContext _context;
 
-        public HomeController(Observer observer, Observable observable)
+        public HomeController(Observer observer, Observable observable, EGardenerContext context)
         {
             _observer = observer;
             _observable = observable;
+            _context = context;
         }
 
 
@@ -36,7 +40,11 @@ namespace E.Gardener.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            //_context.Users.Add(new User {Name = "Kristmund" });
+            //_context.SaveChanges();
+
+
+            return View(_context.Users.First(x => x.Name == "Kristmund"));
         }
 
         public IActionResult Contact()

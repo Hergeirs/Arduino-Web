@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E.Gardener", "E.Gardener\E.Gardener.csproj", "{1F62A8AE-A668-4089-BD18-899B8D3FC0D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoObserver", "ClassLibrary1\ArduinoObserver.csproj", "{F25524D0-330F-4F0E-AC75-4A548772425B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArduinoObserver", "ClassLibrary1\ArduinoObserver.csproj", "{F25524D0-330F-4F0E-AC75-4A548772425B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{FDEBE2B9-4BDA-45AF-BD26-50BBCCD7A4BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F25524D0-330F-4F0E-AC75-4A548772425B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F25524D0-330F-4F0E-AC75-4A548772425B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F25524D0-330F-4F0E-AC75-4A548772425B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDEBE2B9-4BDA-45AF-BD26-50BBCCD7A4BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDEBE2B9-4BDA-45AF-BD26-50BBCCD7A4BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDEBE2B9-4BDA-45AF-BD26-50BBCCD7A4BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDEBE2B9-4BDA-45AF-BD26-50BBCCD7A4BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
