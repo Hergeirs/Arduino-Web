@@ -42,11 +42,9 @@ namespace E.Gardener
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-           Observable observable = new Observable();
-           Observer observer = new Observer("my name");
-           observer.Subscribe(observable);
-           services.AddSingleton<Observer>(observer);
+           Observable observable = new Observable();;
            services.AddSingleton<Observable>(observable);
+           services.AddSingleton<DataLogger>();
 
 
 

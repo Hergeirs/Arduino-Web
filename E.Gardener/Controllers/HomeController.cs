@@ -9,26 +9,24 @@ using E.Gardener.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
 using Repository;
+using System.Linq;
 
 namespace E.Gardener.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly Observer _observer;
-        private readonly Observable _observable;
+        private readonly DataLogger _dataLogger;
         private readonly EGardenerContext _context;
 
-        public HomeController(Observer observer, Observable observable, EGardenerContext context)
+        public HomeController(DataLogger logger, EGardenerContext context)
         {
-            _observer = observer;
-            _observable = observable;
+            _dataLogger = logger;
             _context = context;
         }
 
         public IActionResult Index()
         {
-            _observable.FetchData();
-            return View(_observer.data);
+            return View(_dataLogger.data.LastOrDefault());
         }
 
         public IActionResult About()

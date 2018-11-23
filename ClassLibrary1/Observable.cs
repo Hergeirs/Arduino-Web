@@ -1,35 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
 
 namespace ArduinoObserver
 {
+
     public class Observable :IDisposable, IObservable<ArduinoData>
     {
-        private SerialPort _serialPort;
 
+        private readonly TcpListener _socket;
         public List<IObserver<ArduinoData>> Observers { get; private set; }
 
         public Observable()
         {
             Observers = new List<IObserver<ArduinoData>>();
-            _serialPort = new SerialPort
-            {
-                PortName = "COM4",
-                BaudRate = 9600,
-                Parity = Parity.None,
-                DataBits = 8,
-                StopBits = StopBits.One
-            };
-            _serialPort.Open();
+            _socket = new TcpListener(GetLocalIPAddress(),80);
+        }
+
+        public void start() 
+        {
+            _socket.Start();
+            new Thread(new ThreadStart(listen)).Start();
+
+        }
+
+        private void listen() {
+            while(true) {
+                new Thread(() => listenToClient(_socket.AcceptTcpClient())).Start();
+            }
+        }
+
+        private void listenToClient(TcpClient client) {
+            while(client.Connected) {
+                while(client.Available > 0) {
+                    var reader = client.GetStream();
+                    while(reader.DataAvailable) {
+                        var data = new ArduinoData();
+                        data.Temperature = reader.ReadByte();
+                        byte[] buffer = new byte[3];
+                        reader.Read(buffer,0,2);
+                        data.Moisture = BitConverter.ToUInt16(buffer);
+                        buffer = new byte[3];
+                        reader.Read(buffer,0,3);
+                        data.Light = BitConverter.ToInt32(buffer);
+                        data.Water = reader.ReadByte();
+
+                        Notify(data);
+                    }
+                }
+                Thread.Sleep(1000);
+            }
+            client.Close();
         }
 
 
         public void Dispose()
         {
             // closing 
-            _serialPort.Close();
-            _serialPort = null;
+            _socket.Stop();
 
             foreach (var observer in Observers.ToArray())
                 if (Observers.Contains(observer))
@@ -66,18 +97,6 @@ namespace ArduinoObserver
             }
         }
 
-        public void FetchData()
-        {
-            _serialPort.WriteLine("hey");
-            var data =  new ArduinoData()
-            {
-                Moisture = (uint) _serialPort.ReadByte(),
-                Temperature = _serialPort.ReadByte()
-            };
-            Notify(data);
-
-        }
-
 
         public void Notify(ArduinoData? data)
         {
@@ -88,6 +107,20 @@ namespace ArduinoObserver
                 else
                     observer.OnNext(data.Value);
             }
+        }
+
+
+        private static IPAddress GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip;
+                }
+            }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
         }
 
 
