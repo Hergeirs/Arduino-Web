@@ -17,7 +17,7 @@ namespace ArduinoObserver
         public Observable()
         {
             Observers = new List<IObserver<ArduinoData>>();
-            _socket = new TcpListener(GetLocalIPAddress(),80);
+            _socket = new TcpListener(GetLocalIPAddress(),1025);
         }
 
         public void start() 
