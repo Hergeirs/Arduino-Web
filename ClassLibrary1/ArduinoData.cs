@@ -9,7 +9,7 @@ namespace ArduinoObserver
         public uint Moisture { get; set; }
         public User User { get; set; }
         [Key]
-        public int PlantId { get; set; }
+        public uint PlantId { get; set; }
         public int Light { get; internal set; }
         public int Water { get; internal set; }
     }

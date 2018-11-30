@@ -9,7 +9,6 @@ using E.Gardener.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
 using Repository;
-using System.Linq;
 
 namespace E.Gardener.Controllers
 {

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
+
 namespace ArduinoObserver
 {
 
@@ -17,7 +18,8 @@ namespace ArduinoObserver
         public Observable()
         {
             Observers = new List<IObserver<ArduinoData>>();
-            _socket = new TcpListener(GetLocalIPAddress(),1025);
+            _socket = new TcpListener(IPAddress.Any,1025);
+            start();
         }
 
         public void start() 
@@ -29,27 +31,30 @@ namespace ArduinoObserver
 
         private void listen() {
             while(true) {
-                new Thread(() => listenToClient(_socket.AcceptTcpClient())).Start();
+                var client = _socket.AcceptTcpClient();
+                new Thread(() => listenToClient(client)).Start();
             }
         }
 
         private void listenToClient(TcpClient client) {
             while(client.Connected) {
-                while(client.Available > 0) {
                     var reader = client.GetStream();
-                    while(reader.DataAvailable) {
-                        var data = new ArduinoData();
-                        data.Temperature = reader.ReadByte();
-                        byte[] buffer = new byte[3];
-                        reader.Read(buffer,0,2);
-                        data.Moisture = BitConverter.ToUInt16(buffer);
-                        buffer = new byte[3];
-                        reader.Read(buffer,0,3);
-                        data.Light = BitConverter.ToInt32(buffer);
-                        data.Water = reader.ReadByte();
-
-                        Notify(data);
-                    }
+                while(client.Available > 0) {
+                    // while(reader.DataAvailable) {
+                    byte[] buffer = new byte[2];
+                    var data = new ArduinoData();
+                    reader.Read(buffer,0,2);
+                    data.PlantId = BitConverter.ToUInt16(buffer);
+                    data.Temperature = reader.ReadByte();
+                    
+                    reader.Read(buffer,0,2);
+                    data.Moisture = BitConverter.ToUInt16(buffer);
+                    buffer = new byte[4];
+                    reader.Read(buffer,0,4);
+                    data.Light = BitConverter.ToInt32(buffer);
+                    data.Water = reader.ReadByte();
+                    Notify(data);
+                    // }
                 }
                 Thread.Sleep(1000);
             }
