@@ -12,13 +12,14 @@ namespace ArduinoObserver
     public class Observable :IDisposable, IObservable<ArduinoData>
     {
 
+        private const int _port = 8080;
         private readonly TcpListener _socket;
         public List<IObserver<ArduinoData>> Observers { get; private set; }
 
         public Observable()
         {
             Observers = new List<IObserver<ArduinoData>>();
-            _socket = new TcpListener(IPAddress.Any,1025);
+            _socket = new TcpListener(IPAddress.Any,_port);
             start();
         }
 
@@ -43,16 +44,19 @@ namespace ArduinoObserver
                     // while(reader.DataAvailable) {
                     byte[] buffer = new byte[2];
                     var data = new ArduinoData();
+
                     reader.Read(buffer,0,2);
                     data.PlantId = BitConverter.ToUInt16(buffer);
                     data.Temperature = reader.ReadByte();
                     
-                    reader.Read(buffer,0,2);
-                    data.Moisture = BitConverter.ToUInt16(buffer);
+                    data.Moisture = (uint) reader.ReadByte();
+                    
                     buffer = new byte[4];
+                    
                     reader.Read(buffer,0,4);
                     data.Light = BitConverter.ToInt32(buffer);
                     data.Water = reader.ReadByte();
+
                     Notify(data);
                     // }
                 }
@@ -102,7 +106,6 @@ namespace ArduinoObserver
             }
         }
 
-
         public void Notify(ArduinoData? data)
         {
             foreach (var observer in Observers)
@@ -113,7 +116,6 @@ namespace ArduinoObserver
                     observer.OnNext(data.Value);
             }
         }
-
 
         private static IPAddress GetLocalIPAddress()
         {
