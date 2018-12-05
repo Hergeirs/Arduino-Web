@@ -1,6 +1,31 @@
-﻿@model ArduinoObserver.ArduinoData
+﻿@model Dictionary<uint, ArduinoObserver.ArduinoData>
 
-Plant Id              : @Model.PlantId
+@*Plant Id              : @Model.PlantId
 Temperature in Celsius: @Model.Temperature
 Moisture in Percents  : @Model.Moisture 
-Light in numbes       : @Model.Light 
+Light in numbes       : @Model.Light*@ 
+
+
+<div align="center">
+    <table class="table table-condensed">
+        <tr>
+            <th>Plant ID</th>
+            <th>Temperature in Celsius:</th>
+            <th>Moisture in Percents</th>
+            <th>Light in numbers</th>
+        </tr>
+        <tr>
+        </tr>
+        @foreach (var plant in @Model)
+        {
+            <tr>
+                <td>@plant.Value.PlantId</td>
+                <td>@plant.Value.Temperature</td>
+                <td>@plant.Value.Moisture</td>
+                <td>@plant.Value.Light</td>
+            </tr>
+        }
+       
+
+    </table>
+</div>

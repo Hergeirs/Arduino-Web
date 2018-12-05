@@ -8,6 +8,7 @@ using ArduinoObserver;
 using E.Gardener.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
+using Microsoft.AspNetCore.Authorization;
 using Repository;
 
 namespace E.Gardener.Controllers
@@ -23,9 +24,19 @@ namespace E.Gardener.Controllers
             _context = context;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
-            return View(_dataLogger.data.LastOrDefault());
+            //var data = new List<ArduinoData> {_dataLogger.data.LastOrDefault()};
+            var map = new Dictionary<uint, ArduinoData>();
+
+            foreach (var arduinoData in _dataLogger.data)
+            {
+            map.Add(arduinoData.PlantId, arduinoData);
+
+            }
+
+            return View(map);
         }
 
         public IActionResult About()
@@ -39,13 +50,7 @@ namespace E.Gardener.Controllers
             return View(_context.Users.First(x => x.Name == "Kristmund"));
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
+ 
         public IActionResult Privacy()
         {
             return View();
