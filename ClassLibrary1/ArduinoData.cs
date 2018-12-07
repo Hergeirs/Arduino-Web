@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Repository;
 
 namespace ArduinoObserver
@@ -10,8 +11,8 @@ namespace ArduinoObserver
         public User User { get; set; }
         [Key]
         public uint PlantId { get; set; }
-        public int Light { get; internal set; }
-        public int Water { get; internal set; }
+        public int Light { get;  set; }
+        public int Water { get;  set; }
     }
 
  

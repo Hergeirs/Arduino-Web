@@ -7,14 +7,20 @@ namespace ArduinoObserver
     public class Observer : IObserver<ArduinoData>
     {
         private IDisposable _unsubscriber;
-        public ArduinoData data { get; private set; }
+        public List<ArduinoData> Data { get; }
+        public string Name { get; }
+
 
         public Observer(string name)
         {
             Name = name;
         }
 
-        public string Name { get; }
+        public Observer(Observable observable)
+        {
+            Data = new List<ArduinoData>();
+            observable.Subscribe(this);
+        }
 
         public virtual void Subscribe(IObservable<ArduinoData> provider)
         {
@@ -36,7 +42,7 @@ namespace ArduinoObserver
         // This runs when data from arduino is received.
         public virtual void OnNext(ArduinoData value)
         {
-            data = value;
+            Data.Add(value);
         }
 
         public virtual void Unsubscribe()

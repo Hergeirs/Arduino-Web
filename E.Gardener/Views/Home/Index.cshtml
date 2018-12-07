@@ -1,4 +1,4 @@
-﻿@model Dictionary<uint, ArduinoObserver.ArduinoData>
+﻿@model IEnumerable<ArduinoObserver.ArduinoData>
 
 @*Plant Id              : @Model.PlantId
 Temperature in Celsius: @Model.Temperature
@@ -19,10 +19,10 @@ Light in numbes       : @Model.Light*@
         @foreach (var plant in @Model)
         {
             <tr>
-                <td>@plant.Value.PlantId</td>
-                <td>@plant.Value.Temperature</td>
-                <td>@plant.Value.Moisture</td>
-                <td>@plant.Value.Light</td>
+                <td>@plant.PlantId</td>
+                <td>@plant.Temperature</td>
+                <td>@plant.Moisture</td>
+                <td>@plant.Light</td>
             </tr>
         }
        

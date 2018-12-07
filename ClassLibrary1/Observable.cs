@@ -9,35 +9,35 @@ using System.Threading;
 namespace ArduinoObserver
 {
 
-    public class Observable :IDisposable, IObservable<ArduinoData>
+    public class Observable :IDisposable
     {
 
-        private const int _port = 8080;
+        private const int Port = 8080;
         private readonly TcpListener _socket;
-        public List<IObserver<ArduinoData>> Observers { get; private set; }
+        public List<Observer> Observers { get; private set; }
 
         public Observable()
         {
-            Observers = new List<IObserver<ArduinoData>>();
-            _socket = new TcpListener(IPAddress.Any,_port);
-            start();
+            Observers = new List<Observer>();
+            _socket = new TcpListener(IPAddress.Any, Port);
+            Start();
         }
 
-        public void start() 
+        public void Start() 
         {
             _socket.Start();
-            new Thread(new ThreadStart(listen)).Start();
+            new Thread(new ThreadStart(Listen)).Start();
 
         }
 
-        private void listen() {
+        private void Listen() {
             while(true) {
                 var client = _socket.AcceptTcpClient();
-                new Thread(() => listenToClient(client)).Start();
+                new Thread(() => ListenToClient(client)).Start();
             }
         }
 
-        private void listenToClient(TcpClient client) {
+        private void ListenToClient(TcpClient client) {
             while(client.Connected) {
                     var reader = client.GetStream();
                 while(client.Available > 0) {
@@ -58,7 +58,6 @@ namespace ArduinoObserver
                     data.Water = reader.ReadByte();
 
                     Notify(data);
-                    // }
                 }
                 Thread.Sleep(1000);
             }
@@ -81,7 +80,7 @@ namespace ArduinoObserver
 
 
 
-        public IDisposable Subscribe(IObserver<ArduinoData> observer)
+        public IDisposable Subscribe(Observer observer)
         {
             if (!Observers.Contains(observer))
                 Observers.Add(observer);
@@ -90,10 +89,10 @@ namespace ArduinoObserver
 
         private class Unsubscriber : IDisposable
         {
-            private readonly List<IObserver<ArduinoData>> _observers;
-            private readonly IObserver<ArduinoData> _observer;
+            private readonly List<Observer> _observers;
+            private readonly Observer _observer;
 
-            public Unsubscriber(List<IObserver<ArduinoData>> observers, IObserver<ArduinoData> observer)
+            public Unsubscriber(List<Observer> observers, Observer observer)
             {
                 this._observers = observers;
                 this._observer = observer;

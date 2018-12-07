@@ -44,7 +44,7 @@ namespace E.Gardener
 
            Observable observable = new Observable();;
            services.AddSingleton<Observable>(observable);
-           services.AddSingleton<DataLogger>();
+           services.AddSingleton<Observer>();
 
 
 

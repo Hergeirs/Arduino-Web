@@ -15,10 +15,10 @@ namespace E.Gardener.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DataLogger _dataLogger;
+        private readonly Observer _dataLogger;
         private readonly EGardenerContext _context;
 
-        public HomeController(DataLogger logger, EGardenerContext context)
+        public HomeController(Observer logger, EGardenerContext context)
         {
             _dataLogger = logger;
             _context = context;
@@ -30,13 +30,44 @@ namespace E.Gardener.Controllers
             //var data = new List<ArduinoData> {_dataLogger.data.LastOrDefault()};
             var map = new Dictionary<uint, ArduinoData>();
 
-            foreach (var arduinoData in _dataLogger.data)
+            foreach (var arduinoData in _dataLogger.Data)
             {
             map.Add(arduinoData.PlantId, arduinoData);
 
             }
 
-            return View(map);
+            //var dummy = new ArduinoData
+            //{
+            //    User = null,
+            //    Light = 111,
+            //    PlantId = 0,
+            //    Temperature = 24,
+            //    Water = 21,
+            //    Moisture = 77
+            //};
+
+            //var dummy2 = new ArduinoData
+            //{
+            //    User = null,
+            //    Light = 122,
+            //    PlantId = 0,
+            //    Temperature = 14,
+            //    Water = 212,
+            //    Moisture = 71
+            //};
+
+
+            //map.Add(0, dummy);
+            //if (map.ContainsKey(dummy2.PlantId))
+            //{
+            //    map[dummy.PlantId] = dummy2;
+            //}
+            //else
+            //{
+            //map.Add(1, dummy2);
+
+            //}
+            return View(map.Values.ToList());
         }
 
         public IActionResult About()
