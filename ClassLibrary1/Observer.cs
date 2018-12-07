@@ -10,10 +10,9 @@ namespace ArduinoObserver
         public List<ArduinoData> Data { get; }
         public string Name { get; }
 
-
         public Observer(string name)
         {
-            Name = name;
+            this.Name = name;
         }
 
         public Observer(Observable observable)

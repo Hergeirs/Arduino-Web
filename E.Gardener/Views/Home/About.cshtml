@@ -1,8 +1,11 @@
-﻿@model Repository.User
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
 @{
     ViewData["Title"] = "About";
 }
 <h2>@ViewData["Title"]</h2>
-<h3>@Model.Name</h3>
+<h3>@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.UserName</h3>
+<h3>@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.PhoneNumber</h3>
 
 <p>Use this area to provide additional information.</p>

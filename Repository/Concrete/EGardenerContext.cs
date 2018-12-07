@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Repository;
 
-namespace E.Gardener.Areas.Identity.Data
+namespace Repository.Concrete
 {
     public class EGardenerContext : IdentityDbContext<IdentityUser>
     {
@@ -12,7 +11,8 @@ namespace E.Gardener.Areas.Identity.Data
         {
         }
 
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
+        public DbSet<Plant> Plants { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

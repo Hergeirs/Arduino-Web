@@ -1,10 +1,4 @@
-﻿@model IEnumerable<ArduinoObserver.ArduinoData>
-
-@*Plant Id              : @Model.PlantId
-Temperature in Celsius: @Model.Temperature
-Moisture in Percents  : @Model.Moisture 
-Light in numbes       : @Model.Light*@ 
-
+﻿@model IEnumerable<Repository.Plant>
 
 <div align="center">
     <table class="table table-condensed">
@@ -20,9 +14,7 @@ Light in numbes       : @Model.Light*@
         {
             <tr>
                 <td>@plant.PlantId</td>
-                <td>@plant.Temperature</td>
-                <td>@plant.Moisture</td>
-                <td>@plant.Light</td>
+               
             </tr>
         }
        

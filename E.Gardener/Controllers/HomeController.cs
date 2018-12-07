@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ArduinoObserver;
-using E.Gardener.Areas.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Repository;
+using Repository.Concrete;
 
 namespace E.Gardener.Controllers
 {
@@ -22,66 +24,41 @@ namespace E.Gardener.Controllers
         {
             _dataLogger = logger;
             _context = context;
+            SavePlant();
         }
+
+
+        public void SavePlant()
+        {
+            foreach (var data in _dataLogger.Data)
+            {
+                Plant plant = new Plant
+                {
+                    DateAdded = DateTime.Now,
+                    PlantId = data.PlantId,
+                };
+
+                if (_context.Plants.Find(plant.PlantId) == null)
+                {
+                    _context.Add(plant);
+                }
+            }
+        }
+        
 
         [Authorize]
         public IActionResult Index()
         {
-            //var data = new List<ArduinoData> {_dataLogger.data.LastOrDefault()};
-            var map = new Dictionary<uint, ArduinoData>();
-
-            foreach (var arduinoData in _dataLogger.Data)
-            {
-            map.Add(arduinoData.PlantId, arduinoData);
-
-            }
-
-            //var dummy = new ArduinoData
-            //{
-            //    User = null,
-            //    Light = 111,
-            //    PlantId = 0,
-            //    Temperature = 24,
-            //    Water = 21,
-            //    Moisture = 77
-            //};
-
-            //var dummy2 = new ArduinoData
-            //{
-            //    User = null,
-            //    Light = 122,
-            //    PlantId = 0,
-            //    Temperature = 14,
-            //    Water = 212,
-            //    Moisture = 71
-            //};
-
-
-            //map.Add(0, dummy);
-            //if (map.ContainsKey(dummy2.PlantId))
-            //{
-            //    map[dummy.PlantId] = dummy2;
-            //}
-            //else
-            //{
-            //map.Add(1, dummy2);
-
-            //}
-            return View(map.Values.ToList());
+            return View();
         }
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Description of your profile";
 
-            //_context.Users.Add(new User {Name = "Kristmund" });
-            //_context.SaveChanges();
-
-
-            return View(_context.Users.First(x => x.Name == "Kristmund"));
+            return View();
         }
 
- 
         public IActionResult Privacy()
         {
             return View();
