@@ -11,7 +11,7 @@ namespace Repository
         public string Name { get; set; }
         public DateTime DateAdded { get; set; }
         public User User { get; set; }
-        public ICollection<ArduinoData> Datas { get; set; }
+        public IEnumerable<ArduinoData> Datas { get; set; }
         //public int IdentityUserId { get; set; }
        
     }

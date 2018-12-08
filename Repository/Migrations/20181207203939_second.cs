@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace E.Gardener.Migrations
+namespace Repository.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class second : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -95,8 +95,8 @@ namespace E.Gardener.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -140,8 +140,8 @@ namespace E.Gardener.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -156,28 +156,52 @@ namespace E.Gardener.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Plant",
+                name: "Plants",
                 columns: table => new
                 {
-                    PlantId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    PlantId = table.Column<long>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     DateAdded = table.Column<DateTime>(nullable: false),
-                    Humidity = table.Column<double>(nullable: false),
-                    Temperature = table.Column<int>(nullable: false),
-                    Light = table.Column<double>(nullable: false),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Plant", x => x.PlantId);
+                    table.PrimaryKey("PK_Plants", x => x.PlantId);
                     table.ForeignKey(
-                        name: "FK_Plant_AspNetUsers_UserId",
+                        name: "FK_Plants_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "ArduinoData",
+                columns: table => new
+                {
+                    Temperature = table.Column<int>(nullable: false),
+                    Moisture = table.Column<long>(nullable: false),
+                    DataId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    PlantId = table.Column<long>(nullable: false),
+                    Light = table.Column<int>(nullable: false),
+                    Water = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArduinoData", x => x.DataId);
+                    table.ForeignKey(
+                        name: "FK_ArduinoData_Plants_PlantId",
+                        column: x => x.PlantId,
+                        principalTable: "Plants",
+                        principalColumn: "PlantId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArduinoData_PlantId",
+                table: "ArduinoData",
+                column: "PlantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -219,13 +243,16 @@ namespace E.Gardener.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Plant_UserId",
-                table: "Plant",
+                name: "IX_Plants_UserId",
+                table: "Plants",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ArduinoData");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -242,7 +269,7 @@ namespace E.Gardener.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Plant");
+                name: "Plants");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

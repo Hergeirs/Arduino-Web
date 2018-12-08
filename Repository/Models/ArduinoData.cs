@@ -2,7 +2,7 @@
 
 namespace Repository.Models
 {
-    public struct ArduinoData
+    public class ArduinoData
     {
         public int Temperature { get; set; }
         public uint Moisture { get; set; }

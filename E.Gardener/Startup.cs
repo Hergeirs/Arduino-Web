@@ -14,6 +14,7 @@ using E.Gardener.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
+using Repository.Concrete;
 
 namespace E.Gardener
 {
@@ -44,7 +45,6 @@ namespace E.Gardener
            Observable observable = new Observable();;
            services.AddSingleton<Observable>(observable);
            services.AddSingleton<Observer>();
-
 
 
         }

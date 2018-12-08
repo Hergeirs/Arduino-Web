@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository.Concrete;
 
-namespace E.Gardener.Migrations
+namespace Repository.Migrations
 {
     [DbContext(typeof(EGardenerContext))]
-    [Migration("20181113133108_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    [Migration("20181207203939_second")]
+    partial class second
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,11 +143,9 @@ namespace E.Gardener.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -178,11 +176,9 @@ namespace E.Gardener.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -191,21 +187,37 @@ namespace E.Gardener.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Repository.Plant", b =>
+            modelBuilder.Entity("Repository.Models.ArduinoData", b =>
                 {
-                    b.Property<int>("PlantId")
+                    b.Property<long>("DataId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateAdded");
+                    b.Property<int>("Light");
 
-                    b.Property<double>("Moisture");
+                    b.Property<long>("Moisture");
 
-                    b.Property<double>("Light");
-
-                    b.Property<string>("Name");
+                    b.Property<long>("PlantId");
 
                     b.Property<int>("Temperature");
+
+                    b.Property<int>("Water");
+
+                    b.HasKey("DataId");
+
+                    b.HasIndex("PlantId");
+
+                    b.ToTable("ArduinoData");
+                });
+
+            modelBuilder.Entity("Repository.Plant", b =>
+                {
+                    b.Property<long>("PlantId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<string>("Name");
 
                     b.Property<string>("UserId");
 
@@ -213,7 +225,7 @@ namespace E.Gardener.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Plant");
+                    b.ToTable("Plants");
                 });
 
             modelBuilder.Entity("Repository.User", b =>
@@ -269,6 +281,14 @@ namespace E.Gardener.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Repository.Models.ArduinoData", b =>
+                {
+                    b.HasOne("Repository.Plant", "Plant")
+                        .WithMany("Datas")
+                        .HasForeignKey("PlantId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
