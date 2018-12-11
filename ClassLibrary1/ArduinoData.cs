@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Repository;
+using Repository.Models;
 
 namespace ArduinoObserver
 {

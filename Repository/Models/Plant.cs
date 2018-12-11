@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
-using Repository.Models;
 
-namespace Repository
+namespace Repository.Models
 {
     public class Plant
     {

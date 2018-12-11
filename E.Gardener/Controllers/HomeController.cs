@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Repository;
 using Repository.Concrete;
+using Repository.Models;
 
 namespace E.Gardener.Controllers
 {

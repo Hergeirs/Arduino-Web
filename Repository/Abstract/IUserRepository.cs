@@ -6,5 +6,6 @@ namespace Repository.Abstract
 {
     public interface IUserRepository
     {
+        
     }
 }

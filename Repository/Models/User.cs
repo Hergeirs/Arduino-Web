@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace Repository
+namespace Repository.Models
 {
     public class User : IdentityUser
     {
