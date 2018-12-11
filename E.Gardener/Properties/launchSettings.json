@@ -1,7 +1,7 @@
-﻿{
+{
   "iisSettings": {
-    "windowsAuthentication": false, 
-    "anonymousAuthentication": true, 
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:58869",
       "sslPort": 44356
@@ -18,10 +18,10 @@
     "E.Gardener": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://*:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://*:5000"
     }
   }
 }
