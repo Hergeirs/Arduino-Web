@@ -15,7 +15,7 @@ namespace ArduinoObserver
         private const int _port = 8080;
         private readonly TcpListener _socket;
         public List<IObserver<ArduinoData>> Observers { get; private set; }
-
+        
         public Observable()
         {
             Observers = new List<IObserver<ArduinoData>>();
