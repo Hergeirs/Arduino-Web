@@ -56,8 +56,8 @@ namespace ArduinoObserver
                     reader.Read(buffer,0,4);
                     data.Light = BitConverter.ToInt32(buffer);
                     data.Water = reader.ReadByte();
-
-                    Notify(data);
+                   
+                    Notify(data);//
                 }
                 Thread.Sleep(1000);
             }

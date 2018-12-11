@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
 using Repository.Concrete;
+using Repository.Models;
 
 namespace E.Gardener
 {

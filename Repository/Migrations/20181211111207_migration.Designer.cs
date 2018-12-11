@@ -10,8 +10,8 @@ using Repository.Concrete;
 namespace Repository.Migrations
 {
     [DbContext(typeof(EGardenerContext))]
-    [Migration("20181207203939_second")]
-    partial class second
+    [Migration("20181211111207_migration")]
+    partial class migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -210,7 +210,7 @@ namespace Repository.Migrations
                     b.ToTable("ArduinoData");
                 });
 
-            modelBuilder.Entity("Repository.Plant", b =>
+            modelBuilder.Entity("Repository.Models.Plant", b =>
                 {
                     b.Property<long>("PlantId")
                         .ValueGeneratedOnAdd();
@@ -228,7 +228,7 @@ namespace Repository.Migrations
                     b.ToTable("Plants");
                 });
 
-            modelBuilder.Entity("Repository.User", b =>
+            modelBuilder.Entity("Repository.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -286,15 +286,15 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Repository.Models.ArduinoData", b =>
                 {
-                    b.HasOne("Repository.Plant", "Plant")
+                    b.HasOne("Repository.Models.Plant", "Plant")
                         .WithMany("Datas")
                         .HasForeignKey("PlantId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Repository.Plant", b =>
+            modelBuilder.Entity("Repository.Models.Plant", b =>
                 {
-                    b.HasOne("Repository.User", "User")
+                    b.HasOne("Repository.Models.User", "User")
                         .WithMany("Plants")
                         .HasForeignKey("UserId");
                 });
