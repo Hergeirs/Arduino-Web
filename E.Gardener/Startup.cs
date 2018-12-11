@@ -47,10 +47,6 @@ namespace E.Gardener
             services.AddSingleton<Observable>(observable);
             services.AddSingleton<Observer>();
 
-            services.AddIdentity<User, IdentityRole>()
-         .AddEntityFrameworkStores<EGardenerContext>()
-         .AddDefaultTokenProviders();
-
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
