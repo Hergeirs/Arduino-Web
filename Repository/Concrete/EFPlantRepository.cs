@@ -33,17 +33,10 @@ namespace Repository.Concrete
             return false;
         }
 
-        public bool SaveData(ArduinoData data)
+        public bool SaveData(Plant plant, ArduinoData data)
         {
-            throw new NotImplementedException();
+            
+            //plant.
         }
-
-        //public bool SaveData(ArduinoData data)
-        //{
-        //    if (data != null)
-        //    {
-        //        _c
-        //    }
-        //}
     }
 }

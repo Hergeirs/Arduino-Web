@@ -19,16 +19,6 @@ namespace Repository.Concrete
 
         public void SaveData(ArduinoData data)
         {
-            ArduinoData dbEntry = _context.Data.Find(data.DataId);
-
-            if (dbEntry != null)
-            {
-                dbEntry.Plant = data.Plant;
-                dbEntry.Light = data.Light;
-                dbEntry.Moisture = data.Moisture;
-                dbEntry.Temperature = data.Temperature;
-                dbEntry.Water = data.Water;
-            }
             _context.Data.Add(data);
         }
     }
