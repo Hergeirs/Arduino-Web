@@ -9,6 +9,6 @@ namespace Repository.Abstract
     {
         IList<Plant> UserPlants(ApplicationUser applicationUser);
         bool SavePlant(Plant plant, ApplicationUser applicationUser);
-        bool SaveData(ArduinoData data);
+        bool SaveData(Plant plant, ArduinoData data);
     } 
 }

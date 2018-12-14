@@ -36,7 +36,9 @@ namespace E.Gardener.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            HttpContext.User.Claims
+
+           
+
             return View();
         }
 
