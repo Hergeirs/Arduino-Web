@@ -39,22 +39,27 @@ namespace E.Gardener
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<EGardenerContext>()
-                .AddDefaultUI();
-
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSingleton<Observer>();
 
             services.AddSingleton<Observable>();
 
+            
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<EGardenerContext>()
+                .AddDefaultUI();
+            
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
-            services.AddHttpContextAccessor();
+            
+            
+          
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,7 +80,7 @@ namespace E.Gardener
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseAuthentication();
+//            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

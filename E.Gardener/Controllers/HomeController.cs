@@ -37,7 +37,7 @@ namespace E.Gardener.Controllers
         public IActionResult Index()
         {
             
-            return View(CurrentUser.Plants);
+            return View(CurrentUser.Result.Plants);
         }
 
         public IActionResult About()
