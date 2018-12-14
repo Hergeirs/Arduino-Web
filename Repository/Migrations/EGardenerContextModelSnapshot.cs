@@ -226,15 +226,15 @@ namespace Repository.Migrations
                     b.ToTable("Plants");
                 });
 
-            modelBuilder.Entity("Repository.Models.User", b =>
+            modelBuilder.Entity("Repository.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<string>("Name");
 
-                    b.ToTable("User");
+                    b.ToTable("ApplicationUser");
 
-                    b.HasDiscriminator().HasValue("User");
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -292,7 +292,7 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Repository.Models.Plant", b =>
                 {
-                    b.HasOne("Repository.Models.User", "User")
+                    b.HasOne("Repository.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Plants")
                         .HasForeignKey("UserId");
                 });

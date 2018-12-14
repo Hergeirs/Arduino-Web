@@ -4,21 +4,23 @@ using System.IO.Ports;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Repository.Models;
 
 
 namespace ArduinoObserver
 {
 
-    public class Observable :IDisposable
+    public class Observable :IDisposable, IObservable<ArduinoData>
     {
 
         private const int Port = 8080;
         private readonly TcpListener _socket;
-        public List<Observer> Observers { get; private set; }
+        public List<IObserver<ArduinoData>> Observers { get; private set; }
 
-        public Observable()
+        public Observable(Observer observer)
         {
-            Observers = new List<Observer>();
+            observer.Subscribe(this);
+            Observers = new List<IObserver<ArduinoData>>();
             _socket = new TcpListener(IPAddress.Any, Port);
             Start();
         }
@@ -26,7 +28,7 @@ namespace ArduinoObserver
         public void Start() 
         {
             _socket.Start();
-            new Thread(new ThreadStart(Listen)).Start();
+            new Thread(Listen).Start();
 
         }
 
@@ -43,7 +45,7 @@ namespace ArduinoObserver
                 while(client.Available > 0) {
                     // while(reader.DataAvailable) {
                     byte[] buffer = new byte[2];
-                    var data = new ArduinoData();
+                    ArduinoData data = new ArduinoData();
 
                     reader.Read(buffer,0,2);
                     data.PlantId = BitConverter.ToUInt16(buffer);
@@ -89,10 +91,10 @@ namespace ArduinoObserver
 
         private class Unsubscriber : IDisposable
         {
-            private readonly List<Observer> _observers;
-            private readonly Observer _observer;
+            private readonly List<IObserver<ArduinoData>> _observers;
+            private readonly IObserver<ArduinoData> _observer;
 
-            public Unsubscriber(List<Observer> observers, Observer observer)
+            public Unsubscriber(List<IObserver<ArduinoData>> observers, IObserver<ArduinoData> observer)
             {
                 this._observers = observers;
                 this._observer = observer;
@@ -105,14 +107,14 @@ namespace ArduinoObserver
             }
         }
 
-        public void Notify(ArduinoData? data)
+        public void Notify(ArduinoData data)
         {
             foreach (var observer in Observers)
             {
-                if (!data.HasValue)
+                if (data == null)
                     observer.OnError(new Exception("Notifying corrupt data from arduino"));
                 else
-                    observer.OnNext(data.Value);
+                    observer.OnNext(data);
             }
         }
 
@@ -130,6 +132,11 @@ namespace ArduinoObserver
         }
 
 
-
+        public IDisposable Subscribe(IObserver<ArduinoData> observer)
+        {
+            if (!Observers.Contains(observer))
+                Observers.Add(observer);
+            return new Unsubscriber(Observers, observer);
+        }
     }
 }

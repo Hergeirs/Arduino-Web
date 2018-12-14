@@ -7,7 +7,8 @@ namespace Repository.Abstract
 {
     public interface IPlantRepository
     {
-        IEnumerable<Plant> UserPlants(User user);
-        bool SavePlant(Plant plant, User user);
+        IList<Plant> UserPlants(ApplicationUser applicationUser);
+        bool SavePlant(Plant plant, ApplicationUser applicationUser);
+        bool SaveData(ArduinoData data);
     } 
 }

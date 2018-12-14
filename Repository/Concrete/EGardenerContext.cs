@@ -8,15 +8,17 @@ using Repository.Models;
 
 namespace Repository.Concrete
 {
-    public class EGardenerContext : IdentityDbContext<IdentityUser>
+    public class EGardenerContext : IdentityDbContext<ApplicationUser>
     {
         public EGardenerContext(DbContextOptions<EGardenerContext> options)
             : base(options)
         {
         }
 
-        //public DbSet<User> Users { get; set; }
+       // public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Plant> Plants { get; set; }
+        public DbSet<ArduinoData> Data { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)

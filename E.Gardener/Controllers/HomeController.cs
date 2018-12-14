@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Repository;
 using Repository.Concrete;
 using Repository.Models;
+using System.Web;
 
 namespace E.Gardener.Controllers
 {
@@ -25,31 +26,17 @@ namespace E.Gardener.Controllers
         {
             _dataLogger = logger;
             _context = context;
-            SavePlant();
         }
-
 
         public void SavePlant()
         {
-            foreach (var data in _dataLogger.Data)
-            {
-                Plant plant = new Plant
-                {
-                    DateAdded = DateTime.Now,
-                    PlantId = data.PlantId,
-                };
-
-                if (_context.Plants.Find(plant.PlantId) == null)
-                {
-                    _context.Add(plant);
-                }
-            }
+            
         }
-        
 
         [Authorize]
         public IActionResult Index()
         {
+            HttpContext.User.Claims
             return View();
         }
 
