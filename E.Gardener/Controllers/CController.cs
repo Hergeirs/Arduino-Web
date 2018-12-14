@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Models;
@@ -13,6 +14,6 @@ namespace E.Gardener.Controllers
             _userManager = userManager;
         }
         
-        protected ApplicationUser CurrentUser => new ApplicationUser();//await _userManager.GetUserAsync(User);
+        protected Task<ApplicationUser> CurrentUser => _userManager.GetUserAsync(User);
     }
 }

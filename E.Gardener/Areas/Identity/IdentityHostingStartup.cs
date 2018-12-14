@@ -20,8 +20,8 @@ namespace E.Gardener.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("EGardenerContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>()
-                    .AddEntityFrameworkStores<EGardenerContext>();
+//                services.AddDefaultIdentity<IdentityUser>()
+//                    .AddEntityFrameworkStores<EGardenerContext>();
             });
         }
     }
