@@ -14,6 +14,7 @@ using E.Gardener.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
+using Repository.Abstract;
 using Repository.Concrete;
 using Repository.Models;
 
@@ -53,9 +54,7 @@ namespace E.Gardener
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
-
-
-
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

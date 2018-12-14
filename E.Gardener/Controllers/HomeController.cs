@@ -21,11 +21,14 @@ namespace E.Gardener.Controllers
     {
         private readonly Observer _dataLogger;
         private readonly EGardenerContext _context;
-
-        public HomeController(Observer logger, EGardenerContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private ApplicationUser CurrentUser => await _userManager.GetUserAsync(User);
+        
+        public HomeController(Observer logger, EGardenerContext context, UserManager<ApplicationUser> userManager)
         {
             _dataLogger = logger;
             _context = context;
+            _userManager = userManager;
         }
 
         public void SavePlant()
@@ -36,8 +39,8 @@ namespace E.Gardener.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            HttpContext.User.Claims
-            return View();
+            
+            return View(CurrentUser.Plants);
         }
 
         public IActionResult About()
