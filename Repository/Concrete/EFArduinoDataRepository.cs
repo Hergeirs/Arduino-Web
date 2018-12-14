@@ -19,6 +19,10 @@ namespace Repository.Concrete
 
         public void SaveData(ArduinoData data)
         {
+           // Plant plant = _context.Plants.Find(data.Plant.PlantId);
+
+            data.Plant.Datas.Add(data); /// ???
+            //plant.Datas.Add(data);
             _context.Data.Add(data);
         }
     }

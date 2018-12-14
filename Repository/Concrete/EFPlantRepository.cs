@@ -10,7 +10,7 @@ namespace Repository.Concrete
     public class EFPlantRepository : IPlantRepository
     {
 
-        private EGardenerContext _context;
+        private readonly EGardenerContext _context;
 
         public EFPlantRepository(EGardenerContext context)
         {
@@ -35,8 +35,12 @@ namespace Repository.Concrete
 
         public bool SaveData(Plant plant, ArduinoData data)
         {
-            
-            //plant.
+            if (plant != null)
+            {
+                plant.Datas.Add(data);
+                return true;
+            }
+            return false;
         }
     }
 }

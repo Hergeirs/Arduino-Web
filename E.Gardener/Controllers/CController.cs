@@ -13,6 +13,6 @@ namespace E.Gardener.Controllers
             _userManager = userManager;
         }
         
-        protected ApplicationUser CurrentUser => await _userManager.GetUserAsync(User);
+        protected ApplicationUser CurrentUser => new ApplicationUser();//await _userManager.GetUserAsync(User);
     }
 }

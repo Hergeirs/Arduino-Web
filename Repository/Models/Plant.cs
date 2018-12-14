@@ -9,8 +9,7 @@ namespace Repository.Models
         public string Name { get; set; }
         public DateTime DateAdded { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-        public IEnumerable<ArduinoData> Datas { get; set; }
-        //public int IdentityUserId { get; set; }
+        public IList<ArduinoData> Datas { get; set; }
        
     }
 }

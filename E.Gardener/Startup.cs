@@ -40,8 +40,8 @@ namespace E.Gardener
             });
 
             services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<EGardenerContext>()
-                .AddDefaultUI();
+                .AddEntityFrameworkStores<EGardenerContext>();
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -54,6 +54,7 @@ namespace E.Gardener
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
+
             services.AddHttpContextAccessor();
         }
 
@@ -73,9 +74,8 @@ namespace E.Gardener
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
-
             app.UseAuthentication();
+            app.UseMvc();
 
             app.UseMvc(routes =>
             {

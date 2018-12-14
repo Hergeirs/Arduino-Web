@@ -32,8 +32,7 @@ namespace ArduinoObserver
         // This runs when data from arduino is received.
         public virtual void OnNext(ArduinoData value)
         {
-            ArduinoDataRepository.SaveData(value);
-           // Data.Add(value);
+            ArduinoDataRepository.SaveData(value); // save the read data into the data repository
         }
 
         public virtual void Unsubscribe()
