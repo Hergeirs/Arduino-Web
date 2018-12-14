@@ -17,18 +17,15 @@ using System.Web;
 
 namespace E.Gardener.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : CController
     {
         private readonly Observer _dataLogger;
         private readonly EGardenerContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private ApplicationUser CurrentUser => await _userManager.GetUserAsync(User);
         
-        public HomeController(Observer logger, EGardenerContext context, UserManager<ApplicationUser> userManager)
+        public HomeController(Observer logger, EGardenerContext context, UserManager<ApplicationUser> userManager) : base(userManager)
         {
             _dataLogger = logger;
             _context = context;
-            _userManager = userManager;
         }
 
         public void SavePlant()
