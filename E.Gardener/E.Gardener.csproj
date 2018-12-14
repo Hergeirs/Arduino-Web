@@ -28,4 +28,8 @@
     <Folder Include="Areas\Identity\Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="UserHelper.cs" />
+  </ItemGroup>
+
 </Project>
