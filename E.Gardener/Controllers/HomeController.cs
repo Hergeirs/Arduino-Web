@@ -23,6 +23,11 @@ namespace E.Gardener.Controllers
 
         public HomeController(Observer logger, EGardenerContext context)
         {
+
+            EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
+
+            arduinoDataRepository.SaveData(new ArduinoData());
+
             _dataLogger = logger;
             _context = context;
             SavePlant();
