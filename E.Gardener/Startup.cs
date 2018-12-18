@@ -38,13 +38,10 @@ namespace E.Gardener
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddDefaultIdentity<IdentityUser>()
-            //    .AddEntityFrameworkStores<EGardenerContext>();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            Observable observable = new Observable(); ;
-            services.AddSingleton<Observable>(observable);
+            var observable = new Observable(); ;
+            services.AddSingleton(observable);
             services.AddSingleton<Observer>();
 
             services.AddAuthentication().AddFacebook(facebookOptions =>

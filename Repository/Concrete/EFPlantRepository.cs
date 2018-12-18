@@ -14,12 +14,12 @@ namespace Repository.Concrete
 
         }
 
-        public IEnumerable<Plant> UserPlants(User user)
+        public IEnumerable<Plant> UserPlants(ApplicationUser user)
         {
             return user.Plants;
         }
 
-        public bool SavePlant(Plant plant, User user)
+        public bool SavePlant(Plant plant, ApplicationUser user)
         {
             throw new NotImplementedException();
         }

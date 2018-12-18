@@ -21,7 +21,7 @@ namespace E.Gardener.Controllers
         private readonly Observer _dataLogger;
         private readonly EGardenerContext _context;
 
-        public HomeController(Observer logger, EGardenerContext context, UserManager<User> userManager) : base(userManager)
+        public HomeController(Observer logger, EGardenerContext context, UserManager<ApplicationUser> userManager) : base(userManager)
         {
 
             EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
@@ -53,9 +53,12 @@ namespace E.Gardener.Controllers
         
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<string> Index()
         {
-            return View();
+            var user = await CurrentUser();
+            return user.Email;
+
+            //return View();
         }
 
         public IActionResult About()

@@ -8,14 +8,10 @@ using Repository.Models;
 
 namespace Repository.Concrete
 {
-    public class EGardenerContext : IdentityDbContext<User,IdentityRole,string>
+    public class EGardenerContext : IdentityDbContext<ApplicationUser,IdentityRole,string>
     {
-        public EGardenerContext()
-        {
-            
-        }
-        
-        public EGardenerContext(DbContextOptions<EGardenerContext> options)
+
+        public EGardenerContext(DbContextOptions options)
             : base(options)
         {
         }

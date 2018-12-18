@@ -21,7 +21,7 @@ namespace E.Gardener.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("EGardenerContextConnection")));
 
-                services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<EGardenerContext>()
+                services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<EGardenerContext>()
                     .AddDefaultUI()
                     .AddDefaultTokenProviders();
 
