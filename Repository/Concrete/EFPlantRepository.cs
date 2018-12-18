@@ -35,7 +35,7 @@ namespace Repository.Concrete
 
         public bool SaveData(Plant plant, ArduinoData data)
         {
-            
+            return false;
             //plant.
         }
     }
