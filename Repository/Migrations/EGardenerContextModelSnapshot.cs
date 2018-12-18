@@ -194,13 +194,15 @@ namespace Repository.Migrations
 
                     b.Property<long>("PlantId");
 
+                    b.Property<long?>("PlantId1");
+
                     b.Property<int>("Temperature");
 
                     b.Property<int>("Water");
 
                     b.HasKey("DataId");
 
-                    b.HasIndex("PlantId");
+                    b.HasIndex("PlantId1");
 
                     b.ToTable("ArduinoData");
                 });
@@ -208,17 +210,18 @@ namespace Repository.Migrations
             modelBuilder.Entity("Repository.Models.Plant", b =>
                 {
                     b.Property<long>("PlantId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<DateTime>("DateAdded");
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("UserId");
-
                     b.HasKey("PlantId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Plants");
                 });
@@ -272,15 +275,14 @@ namespace Repository.Migrations
                 {
                     b.HasOne("Repository.Models.Plant", "Plant")
                         .WithMany("Datas")
-                        .HasForeignKey("PlantId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PlantId1");
                 });
 
             modelBuilder.Entity("Repository.Models.Plant", b =>
                 {
-                    b.HasOne("Repository.Models.ApplicationUser", "User")
+                    b.HasOne("Repository.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Plants")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("ApplicationUserId");
                 });
 #pragma warning restore 612, 618
         }

@@ -158,17 +158,18 @@ namespace Repository.Migrations
                 name: "Plants",
                 columns: table => new
                 {
-                    PlantId = table.Column<long>(nullable: false),
+                    PlantId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     DateAdded = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Plants", x => x.PlantId);
                     table.ForeignKey(
-                        name: "FK_Plants_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Plants_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -180,6 +181,7 @@ namespace Repository.Migrations
                 {
                     Temperature = table.Column<int>(nullable: false),
                     Moisture = table.Column<long>(nullable: false),
+                    PlantId1 = table.Column<long>(nullable: true),
                     DataId = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PlantId = table.Column<long>(nullable: false),
@@ -190,17 +192,17 @@ namespace Repository.Migrations
                 {
                     table.PrimaryKey("PK_ArduinoData", x => x.DataId);
                     table.ForeignKey(
-                        name: "FK_ArduinoData_Plants_PlantId",
-                        column: x => x.PlantId,
+                        name: "FK_ArduinoData_Plants_PlantId1",
+                        column: x => x.PlantId1,
                         principalTable: "Plants",
                         principalColumn: "PlantId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArduinoData_PlantId",
+                name: "IX_ArduinoData_PlantId1",
                 table: "ArduinoData",
-                column: "PlantId");
+                column: "PlantId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -242,9 +244,9 @@ namespace Repository.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Plants_UserId",
+                name: "IX_Plants_ApplicationUserId",
                 table: "Plants",
-                column: "UserId");
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
