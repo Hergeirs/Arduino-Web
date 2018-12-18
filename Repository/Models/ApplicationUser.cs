@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Repository.Models
 {
-    public class User : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         public string Name { get; set; }
         public IEnumerable<Plant> Plants { get; set; }  

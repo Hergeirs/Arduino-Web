@@ -13,14 +13,14 @@ namespace E.Gardener.Controllers
 
  
 
-    protected CController(UserManager<User> userManager)
+    protected CController(UserManager<ApplicationUser> userManager)
     {
         this.UserManager = userManager;
     }
 
-      private UserManager<User> UserManager { get; set; }
+      private UserManager<ApplicationUser> UserManager { get; set; }
 
 
-      public Task<User> CurrentUser => UserManager.GetUserAsync(User);
+      protected async Task<ApplicationUser> CurrentUser() => await UserManager.GetUserAsync(User);
   }
 }
