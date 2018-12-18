@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Text;
+using System.Threading.Tasks;
 using Repository.Models;
 
 namespace Repository.Abstract
 {
     public interface IPlantRepository
     {
-        IEnumerable<Plant> UserPlants(ApplicationUser user);
-        bool SavePlant(Plant plant, ApplicationUser user);
+        Task<IEnumerable<Plant>> UserPlants();
+        Task SavePlant(Plant plant);
     } 
 }

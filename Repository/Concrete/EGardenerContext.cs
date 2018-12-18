@@ -30,13 +30,12 @@ namespace Repository.Concrete
 
         public EGardenerContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<EGardenerContext>();
-           // optionsBuilder.UseSqlServer(context.Configuration.GetConnectionString("EGardenerContextConnection")));
-
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=EGarden;Trusted_Connection=True;MultipleActiveResultSets=true");
             //optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=EGarden; user id=sa; password=Password0;Trusted_Connection=False;MultipleActiveResultSets=true;");
 
-            return new EGardenerContext(optionsBuilder.Options);
+            return new EGardenerContext(new DbContextOptionsBuilder<EGardenerContext>()
+                .UseSqlServer(
+                    "Server=127.0.0.1;Database=EGarden;User Id=SA;Password=Password0")
+                .Options);
         }
     }
 

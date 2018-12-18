@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO.Ports;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using ArduinoObserver;
+using Repository.Abstract;
 using Repository.Concrete;
 using Repository.Models;
 
@@ -18,9 +15,9 @@ namespace E.Gardener.Controllers
     public class HomeController : CController
     {
         private readonly Observer _dataLogger;
-        private readonly EGardenerContext _context;
+        private readonly IPlantRepository _plantRepository;
 
-        public HomeController(Observer logger, EGardenerContext context, UserManager<ApplicationUser> userManager) : base(userManager)
+        public HomeController(Observer logger, IPlantRepository repository, UserManager<ApplicationUser> userManager) : base(userManager)
         {
 
            // EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
@@ -28,7 +25,7 @@ namespace E.Gardener.Controllers
           //  arduinoDataRepository.SaveData(new ArduinoData());
 
             _dataLogger = logger;
-            _context = context;
+            _plantRepository = repository;
         }
 
         
@@ -37,9 +34,21 @@ namespace E.Gardener.Controllers
         public async Task<string> Index()
         {
             var user = await CurrentUser();
-            return user.Email;
-
+            return user.Name;
             //return View();
+        }
+
+        public async Task<string> UpdateName()
+        {
+            
+            var user = await CurrentUser();
+
+           await _plantRepository.SavePlant(new Plant()
+            {
+                Name = "hey"
+            });
+            return _plantRepository.UserPlants().ToString();
+
         }
 
         public IActionResult About()
@@ -54,6 +63,17 @@ namespace E.Gardener.Controllers
             return View();
         }
 
+        public string CreateTestPlant()
+        {
+            _plantRepository.SavePlant(new Plant()
+            {
+                Name = "hye"
+            });
+            return "shit";
+        }
+
+        
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
