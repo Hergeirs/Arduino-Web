@@ -18,7 +18,6 @@ namespace Repository.Concrete
 
         //public DbSet<User> Users { get; set; }
         public DbSet<Plant> Plants { get; set; }
-        public DbSet<ArduinoData> Data { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

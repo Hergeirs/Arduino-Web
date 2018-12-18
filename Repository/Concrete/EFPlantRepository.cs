@@ -9,37 +9,19 @@ namespace Repository.Concrete
     public class EFPlantRepository : IPlantRepository
     {
 
-        private readonly EGardenerContext _context;
-
         public EFPlantRepository(EGardenerContext context)
         {
-            _context = context;
+
         }
 
-        public IList<Plant> UserPlants(ApplicationUser applicationUser)
+        public IEnumerable<Plant> UserPlants(ApplicationUser user)
         {
-            return applicationUser.Plants;
+            return user.Plants;
         }
 
-        public bool SavePlant(Plant plant, ApplicationUser applicationUser)
+        public bool SavePlant(Plant plant, ApplicationUser user)
         {
-            if (applicationUser != null && plant != null)
-            {
-                //_context.Users.Find(applicationUser).Plants.Add(plant);
-                _context.Plants.Add(plant);
-                return true;
-            }
-            return false;
-        }
-
-        public bool SaveData(Plant plant, ArduinoData data)
-        {
-            if (plant != null)
-            {
-                plant.Datas.Add(data);
-                return true;
-            }
-            return false;
+            throw new NotImplementedException();
         }
     }
 }

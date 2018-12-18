@@ -22,6 +22,11 @@ namespace E.Gardener.Controllers
 
         public HomeController(Observer logger, EGardenerContext context, UserManager<ApplicationUser> userManager) : base(userManager)
         {
+
+           // EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
+
+          //  arduinoDataRepository.SaveData(new ArduinoData());
+
             _dataLogger = logger;
             _context = context;
         }
@@ -29,42 +34,12 @@ namespace E.Gardener.Controllers
         
 
         [Authorize]
-        public async Task<ViewResult> Index()
+        public async Task<string> Index()
         {
             var user = await CurrentUser();
+            return user.Email;
 
-            ArduinoData data = new ArduinoData
-            {
-                DataId = 1,
-                Plant = new Plant(),
-                PlantId = 1,
-                Temperature = 100,
-                Light = 100,
-                Moisture = 100,
-                Water = 1000
-            };
-
-            EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
-
-            Plant plant = new Plant
-            {
-                User = user,
-                PlantId = 1,
-                Datas = new List<ArduinoData>(2),
-                Name = "h36",
-                DateAdded = DateTime.Now
-            };
-
-            EFPlantRepository efPlantRepository = new EFPlantRepository(_context);
-
-            efPlantRepository.SavePlant(plant, user);
-
-            arduinoDataRepository.SaveData(data);
-
-            ArduinoData hey = _context.Data.FirstOrDefault(m => m.DataId == data.DataId);
-
-            _context.SaveChanges();
-            return View(user.Plants);
+            //return View();
         }
 
         public IActionResult About()
