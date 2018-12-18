@@ -21,6 +21,6 @@ namespace E.Gardener.Controllers
       private UserManager<User> UserManager { get; set; }
 
 
-      protected Task<User> CurrentUser => UserManager.GetUserAsync(User);
+      public Task<User> CurrentUser => UserManager.GetUserAsync(User);
   }
 }

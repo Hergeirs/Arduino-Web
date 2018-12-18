@@ -16,12 +16,12 @@ using Repository.Models;
 
 namespace E.Gardener.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : CController
     {
         private readonly Observer _dataLogger;
         private readonly EGardenerContext _context;
 
-        public HomeController(Observer logger, EGardenerContext context)
+        public HomeController(Observer logger, EGardenerContext context, UserManager<User> userManager) : base(userManager)
         {
             _dataLogger = logger;
             _context = context;
@@ -50,7 +50,6 @@ namespace E.Gardener.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            
             return View();
         }
 
