@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Repository.Abstract;
 using Repository.Models;
 
@@ -8,20 +12,41 @@ namespace Repository.Concrete
 {
     public class EFPlantRepository : IPlantRepository
     {
+        private readonly EGardenerContext _context;
+        private readonly IApplicationUserAccessor _userAccessor;
 
-        public EFPlantRepository(EGardenerContext context)
+        public EFPlantRepository(EGardenerContext context, IApplicationUserAccessor userAccessor)
         {
-
+            _context = context;
+            _userAccessor = userAccessor;
         }
 
-        public IEnumerable<Plant> UserPlants(ApplicationUser user)
+        private Task<ApplicationUser> User()
         {
+            return _userAccessor.GetUser();
+        }
+        
+        public async Task<IEnumerable<Plant>> UserPlants()
+        {
+
+            var user = await User();
+
             return user.Plants;
         }
 
-        public bool SavePlant(Plant plant, ApplicationUser user)
+        public async Task SavePlant(Plant plant)
         {
-            throw new NotImplementedException();
+            var user = await User();
+            var dbUser = await _context.Users.FindAsync(user.Id);
+
+            plant.ApplicationUser = user;
+            if (dbUser.Plants == null)
+            {
+                dbUser.Plants = new List<Plant>();
+            }
+            
+            dbUser.Plants.Add(plant);
+            await _context.SaveChangesAsync();
         }
     }
 }

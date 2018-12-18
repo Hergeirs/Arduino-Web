@@ -14,6 +14,7 @@ using E.Gardener.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
+using Repository.Abstract;
 using Repository.Concrete;
 using Repository.Models;
 
@@ -43,6 +44,8 @@ namespace E.Gardener
             var observable = new Observable(); ;
             services.AddSingleton(observable);
             services.AddSingleton<Observer>();
+            services.AddScoped<IApplicationUserAccessor, ApplicationUserAccessor>();
+            services.AddScoped<IPlantRepository, EFPlantRepository>();
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
