@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace ArduinoObserver
 {
     public class Observer : IObserver<ArduinoData>

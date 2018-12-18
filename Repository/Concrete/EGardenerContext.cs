@@ -28,7 +28,29 @@ namespace Repository.Concrete
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
+        public EGardenerContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<EGardenerContext>();
+           // optionsBuilder.UseSqlServer(context.Configuration.GetConnectionString("EGardenerContextConnection")));
+
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=EGarden;Trusted_Connection=True;MultipleActiveResultSets=true");
+            //optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=EGarden; user id=sa; password=Password0;Trusted_Connection=False;MultipleActiveResultSets=true;");
+
+            return new EGardenerContext(optionsBuilder.Options);
+        }
     }
 
+    //public class EGardenerContextFactory : IDesignTimeDbContextFactory<EGardenerContext>
+    //{
+    //    public EGardenerContext CreateDbContext(string[] args)
+    //    {
+    //        var optionsBuilder = new DbContextOptionsBuilder<EGardenerContext>();
+    //        optionsBuilder.UseSqlServer(context.Configuration.GetConnectionString("EGardenerContextConnection")));
+
+    //        return new BloggingContext(optionsBuilder.Options);
+    //    }
+    //}
 
 }
+
+

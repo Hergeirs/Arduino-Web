@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository.Models;
+using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Net;
@@ -105,14 +106,14 @@ namespace ArduinoObserver
             }
         }
 
-        public void Notify(ArduinoData? data)
+        public void Notify(ArduinoData data)
         {
             foreach (var observer in Observers)
             {
-                if (!data.HasValue)
+                if (data == null)
                     observer.OnError(new Exception("Notifying corrupt data from arduino"));
                 else
-                    observer.OnNext(data.Value);
+                    observer.OnNext(data);
             }
         }
 

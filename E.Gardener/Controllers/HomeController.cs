@@ -5,12 +5,11 @@ using System.IO.Ports;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ArduinoObserver;
 using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Repository;
+using ArduinoObserver;
 using Repository.Concrete;
 using Repository.Models;
 
@@ -24,32 +23,14 @@ namespace E.Gardener.Controllers
         public HomeController(Observer logger, EGardenerContext context, UserManager<ApplicationUser> userManager) : base(userManager)
         {
 
-            EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
+           // EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
 
-            arduinoDataRepository.SaveData(new ArduinoData());
+          //  arduinoDataRepository.SaveData(new ArduinoData());
 
             _dataLogger = logger;
             _context = context;
-            SavePlant();
         }
 
-
-        public void SavePlant()
-        {
-            foreach (var data in _dataLogger.Data)
-            {
-                Plant plant = new Plant
-                {
-                    DateAdded = DateTime.Now,
-                    PlantId = data.PlantId,
-                };
-
-                if (_context.Plants.Find(plant.PlantId) == null)
-                {
-                    _context.Add(plant);
-                }
-            }
-        }
         
 
         [Authorize]
