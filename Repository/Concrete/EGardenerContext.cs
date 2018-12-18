@@ -8,8 +8,13 @@ using Repository.Models;
 
 namespace Repository.Concrete
 {
-    public class EGardenerContext : IdentityDbContext<IdentityUser>
+    public class EGardenerContext : IdentityDbContext<User,IdentityRole,string>
     {
+        public EGardenerContext()
+        {
+            
+        }
+        
         public EGardenerContext(DbContextOptions<EGardenerContext> options)
             : base(options)
         {

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository.Concrete;
+using Repository.Models;
 
 [assembly: HostingStartup(typeof(E.Gardener.Areas.Identity.IdentityHostingStartup))]
 namespace E.Gardener.Areas.Identity
@@ -20,8 +21,10 @@ namespace E.Gardener.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("EGardenerContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>()
-                    .AddEntityFrameworkStores<EGardenerContext>();
+                services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<EGardenerContext>()
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders();
+
             });
         }
     }
