@@ -10,6 +10,11 @@ namespace Repository.Concrete
 {
     public class EGardenerContext : IdentityDbContext<IdentityUser>
     {
+        public EGardenerContext()
+        {
+            
+        }
+        
         public EGardenerContext(DbContextOptions<EGardenerContext> options)
             : base(options)
         {

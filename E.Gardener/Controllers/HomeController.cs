@@ -50,6 +50,7 @@ namespace E.Gardener.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            
             return View();
         }
 
