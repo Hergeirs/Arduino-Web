@@ -37,6 +37,9 @@ namespace E.Gardener.Controllers
         public IActionResult Index()
         {
             
+            EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
+
+            arduinoDataRepository.SaveData(new ArduinoData());
             return View(CurrentUser.Result.Plants);
         }
 
