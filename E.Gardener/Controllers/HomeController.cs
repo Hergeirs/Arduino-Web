@@ -48,15 +48,19 @@ namespace E.Gardener.Controllers
             {
                 Name = "hey"
             });
+
+
             return _plantRepository.UserPlants().ToString();
 
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> About()
         {
             ViewData["Message"] = "Description of your profile";
 
-            return View();
+            var user = await CurrentUser();
+
+            return View(user);
         }
 
         public IActionResult Privacy()

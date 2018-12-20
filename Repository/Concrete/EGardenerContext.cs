@@ -34,7 +34,7 @@ namespace Repository.Concrete
 
             return new EGardenerContext(new DbContextOptionsBuilder<EGardenerContext>()
                 .UseSqlServer(
-                    "Server=127.0.0.1;Database=EGarden;User Id=SA;Password=Password0")
+                    "Server=(localdb)\\mssqllocaldb;Database=E.Gardener;Trusted_Connection=True;MultipleActiveResultSets=true")
                 .Options);
         }
     }

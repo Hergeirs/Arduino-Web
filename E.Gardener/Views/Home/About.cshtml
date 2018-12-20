@@ -1,11 +1,16 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject UserManager<IdentityUser> UserManager
+﻿@model Repository.Models.ApplicationUser;
 
+
+<h2>Your Profile Description</h2>
 @{
-    ViewData["Title"] = "About";
-}
-<h2>@ViewData["Title"]</h2>
-<h3>@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.UserName</h3>
-<h3>@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.PhoneNumber</h3>
+    if (Model.Plants == null)
+    {
+        <p>Number of Plants: 0</p>
 
-<p>Use this area to provide additional information.</p>
+    }
+    else
+    {
+        <p>Number of Plants: @Model.Plants.Count</p>
+    }
+}
+<p>Phone Number: @Model.PhoneNumber</p>
