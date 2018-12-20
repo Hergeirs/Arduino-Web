@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using E.Gardener.Models;
+using E.Gardener.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
@@ -21,7 +23,7 @@ using Repository.Models;
 namespace E.Gardener
 {
     public class Startup
-    {
+    {        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -41,11 +43,14 @@ namespace E.Gardener
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var observable = new Observable(); ;
-            services.AddSingleton(observable);
+            
             services.AddSingleton<Observer>();
+            services.AddSingleton<DataPusherObserver>();
+            services.AddSingleton<Observable>();            
             services.AddScoped<IApplicationUserAccessor, ApplicationUserAccessor>();
             services.AddScoped<IPlantRepository, EFPlantRepository>();
+            services.AddSingleton<IArduinoDataRepository, EFArduinoDataRepository>();
+            services.AddSingleton<DataHub>();
 
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
@@ -53,8 +58,14 @@ namespace E.Gardener
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
 
-
-
+            
+            services.AddSignalR();
+            
+            // requires
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            // using WebPWrecover.Services;
+            services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,12 +88,20 @@ namespace E.Gardener
 
             app.UseAuthentication();
 
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<DataHub>("/dataHub");
+            });
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            
+            //initializing ArduinoListener
+            app.ApplicationServices.GetService<Observable>();
         }
     }
 }

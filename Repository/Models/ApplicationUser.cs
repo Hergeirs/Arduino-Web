@@ -6,6 +6,6 @@ namespace Repository.Models
     public class ApplicationUser : IdentityUser
     {
         public string Name { get; set; }
-        public List<Plant> Plants { get; set; }  
+        public virtual List<Plant> Plants { get; set; }  
     }
 }

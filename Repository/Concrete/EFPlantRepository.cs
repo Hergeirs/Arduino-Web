@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Repository.Abstract;
 using Repository.Models;
 
@@ -30,8 +32,8 @@ namespace Repository.Concrete
         {
 
             var user = await User();
-
-            return user.Plants;
+            var daUser = _context.Users.Include(x => x.Plants).Single(x => x.Id == user.Id);
+            return daUser.Plants;
         }
 
         public async Task SavePlant(Plant plant)
@@ -46,7 +48,7 @@ namespace Repository.Concrete
             }
             
             dbUser.Plants.Add(plant);
-            await _context.SaveChangesAsync();
+            var amount = await _context.SaveChangesAsync();
         }
     }
 }

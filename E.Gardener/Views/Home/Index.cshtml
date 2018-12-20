@@ -4,14 +4,20 @@
     <table class="table table-condensed">
         <tr>
             <th>Plant ID</th>
-            <th>Temperature in Celsius:</th>
-            <th>Moisture in Percents</th>
-            <th>Light in numbers</th>
+            <th>Name</th>
+            <th>Added</th>
         </tr>
         <tr>
         </tr>
-        
-       
+        @foreach (var plant in Model)
+        {
+            <tr>
+                <td>@plant.PlantId</td>
+                <td>@plant.Name</td>
+                <td>@plant.DateAdded</td>
+            </tr>
+        }
+
 
     </table>
 </div>

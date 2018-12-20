@@ -1,0 +1,10 @@
+@model PartialViewResult
+
+@{
+    ViewBag.Title = "Your Plants";
+    Layout = "_Layout";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@await Html.PartialAsync("_plants_partial");
