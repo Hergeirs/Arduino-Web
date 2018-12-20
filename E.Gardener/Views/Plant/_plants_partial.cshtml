@@ -1,0 +1,11 @@
+@using E.Gardener.Views.Plant
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Repository.Models
+@model System.Collections.Generic.IEnumerable<Repository.Models.Plant>
+
+<h1>Your plants: </h1>
+
+@foreach (var plant in Model)
+{
+    @Html.Partial("_plant_partial",plant)
+}

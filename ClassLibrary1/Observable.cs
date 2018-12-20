@@ -10,18 +10,26 @@ using System.Threading;
 namespace ArduinoObserver
 {
 
-    public class Observable :IDisposable
+    public class Observable :IDisposable, IObservable<ArduinoData>
     {
 
         private const int Port = 8080;
         private readonly TcpListener _socket;
-        public List<Observer> Observers { get; private set; }
+        private List<IObserver<ArduinoData>> Observers { get; set; }
 
-        public Observable()
+        public Observable(DataPusherObserver dataPusherObserver, Observer observer)
         {
-            Observers = new List<Observer>();
+            //prep
+            Observers = new List<IObserver<ArduinoData>>();
             _socket = new TcpListener(IPAddress.Any, Port);
             Start();
+            
+            
+            // subscribing necessary observers
+            dataPusherObserver.Subscribe(this);
+            observer.Subscribe(this);
+            
+            
         }
 
         public void Start() 
@@ -81,7 +89,7 @@ namespace ArduinoObserver
 
 
 
-        public IDisposable Subscribe(Observer observer)
+        public IDisposable Subscribe(IObserver<ArduinoData> observer)
         {
             if (!Observers.Contains(observer))
                 Observers.Add(observer);
@@ -90,10 +98,10 @@ namespace ArduinoObserver
 
         private class Unsubscriber : IDisposable
         {
-            private readonly List<Observer> _observers;
-            private readonly Observer _observer;
+            private readonly List<IObserver<ArduinoData>> _observers;
+            private readonly IObserver<ArduinoData> _observer;
 
-            public Unsubscriber(List<Observer> observers, Observer observer)
+            public Unsubscriber(List<IObserver<ArduinoData>> observers, IObserver<ArduinoData> observer)
             {
                 this._observers = observers;
                 this._observer = observer;

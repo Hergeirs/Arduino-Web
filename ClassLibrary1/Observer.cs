@@ -1,52 +1,55 @@
 ﻿using Repository.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Repository.Abstract;
+
 namespace ArduinoObserver
 {
-    public class Observer : IObserver<ArduinoData>
+    public class Observer : IObserver<ArduinoData>, IDisposable
     {
+        private readonly IArduinoDataRepository _repository;
         private IDisposable _unsubscriber;
-        public List<ArduinoData> Data { get; }
-        public string Name { get; }
 
-        public Observer(string name)
+        public Observer(IArduinoDataRepository repository)
         {
-            this.Name = name;
+            _repository = repository;
         }
 
-        public Observer(Observable observable)
+        public Observer(IObservable<ArduinoData> observable)
         {
-            Data = new List<ArduinoData>();
             observable.Subscribe(this);
         }
 
-        public virtual void Subscribe(IObservable<ArduinoData> provider)
+        public void Subscribe(IObservable<ArduinoData> provider)
         {
             if (provider != null)
                 _unsubscriber = provider.Subscribe(this);
         }
 
-        public virtual void OnCompleted()
+        public void OnCompleted()
         {
-            Console.WriteLine($"connection to {Name} closed.");
+            Console.WriteLine($"connection to  closed.");
             this.Unsubscribe();
         }
 
-        public virtual void OnError(Exception e)
+        public void OnError(Exception e)
         {
-            Console.WriteLine($"{Name}: Error in connection or transmission of data.");
+            Console.WriteLine($": Error in connection or transmission of data.");
         }
 
         // This runs when data from arduino is received.
-        public virtual void OnNext(ArduinoData value)
+        public void OnNext(ArduinoData value)
         {
-            Data.Add(value);
+            _repository.SaveData(value);
         }
 
-        public virtual void Unsubscribe()
+        public void Unsubscribe()
         {
             _unsubscriber.Dispose();
+        }
+
+        public void Dispose()
+        {
+            _unsubscriber?.Dispose();
         }
     }
 }

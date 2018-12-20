@@ -12,12 +12,12 @@ using Repository.Models;
 
 namespace E.Gardener.Controllers
 {
-    public class HomeController : CController
+    public class HomeController : Controller
     {
         private readonly Observer _dataLogger;
         private readonly IPlantRepository _plantRepository;
 
-        public HomeController(Observer logger, IPlantRepository repository, UserManager<ApplicationUser> userManager) : base(userManager)
+        public HomeController(Observer logger, IPlantRepository repository)
         {
 
            // EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
@@ -32,23 +32,19 @@ namespace E.Gardener.Controllers
         
 
         [Authorize]
-        public async Task<string> Index()
+        public async Task<IActionResult> Index()
         {
-            var user = await CurrentUser();
-            return user.Name;
-            //return View();
+            
+            return View(await _plantRepository.UserPlants());
         }
 
         public async Task<string> UpdateName()
         {
-            
-            var user = await CurrentUser();
-
            await _plantRepository.SavePlant(new Plant()
             {
                 Name = "hey"
             });
-            return _plantRepository.UserPlants().ToString();
+            return "done";
 
         }
 
@@ -64,16 +60,6 @@ namespace E.Gardener.Controllers
             return View();
         }
 
-        public string CreateTestPlant()
-        {
-            _plantRepository.SavePlant(new Plant()
-            {
-                Name = "hye"
-            });
-            return "shit";
-        }
-
-        
         
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
