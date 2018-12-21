@@ -11,7 +11,7 @@ namespace Repository.Concrete
     {
         public void SaveData(ArduinoData data)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

@@ -2,15 +2,24 @@
 
 
 <h2>Your Profile Description</h2>
+<p>Login user name: @Model.Name</p>
 @{
     if (Model.Plants == null)
     {
         <p>Number of Plants: 0</p>
-
     }
     else
     {
         <p>Number of Plants: @Model.Plants.Count</p>
     }
+
+    if (!Model.PhoneNumberConfirmed)
+    {
+        <p>No phone number attached to this user. You can add it by pressing your user name in the top right corner</p>
+    }
+    else
+    {
+        <p>Phone Number: @Model.PhoneNumber</p>
+    }
 }
-<p>Phone Number: @Model.PhoneNumber</p>
+

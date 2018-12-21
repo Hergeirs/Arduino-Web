@@ -10,7 +10,7 @@ using System.Threading;
 namespace ArduinoObserver
 {
 
-    public class Observable :IDisposable, IObservable<ArduinoData>
+    public class Observable : IDisposable, IObservable<ArduinoData>
     {
 
         private const int Port = 8080;

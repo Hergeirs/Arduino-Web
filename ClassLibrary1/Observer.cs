@@ -39,7 +39,7 @@ namespace ArduinoObserver
         // This runs when data from arduino is received.
         public void OnNext(ArduinoData value)
         {
-            _repository.SaveData(value);
+            _repository.SaveData(value); 
         }
 
         public void Unsubscribe()
