@@ -1,10 +1,11 @@
-using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Abstract;
 
-namespace E.Gardener.Views.Plant
+namespace E.Gardener.Controllers
 {
+    [Authorize]
     public class PlantController : Controller
     {
         private readonly IPlantRepository _repository;
@@ -15,14 +16,15 @@ namespace E.Gardener.Views.Plant
         }
         
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             
-            return View();
+            return View(await _repository.UserPlants());
         }
 
-        public     PartialViewResult PlantPartial(Repository.Models.Plant plant)
-        {
+
+        public PartialViewResult PlantPartial(Repository.Models.Plant plant)
+        {    
             return PartialView("_plant_partial", plant);
         }
 

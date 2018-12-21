@@ -23,7 +23,7 @@ using Repository.Models;
 namespace E.Gardener
 {
     public class Startup
-    {        
+    {
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -44,14 +44,14 @@ namespace E.Gardener
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             
-            services.AddSingleton<Observer>();
-            services.AddSingleton<DataPusherObserver>();
-            services.AddSingleton<Observable>();            
+            services.AddTransient<Observer>();
+            services.AddTransient<DataPusherObserver>();
+            services.AddHostedService<Observable>();            
             services.AddScoped<IApplicationUserAccessor, ApplicationUserAccessor>();
             services.AddScoped<IPlantRepository, EFPlantRepository>();
-            services.AddSingleton<IArduinoDataRepository, EFArduinoDataRepository>();
+            services.AddScoped<IArduinoDataRepository, EFArduinoDataRepository>();
             services.AddSingleton<DataHub>();
-
+            
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
@@ -99,9 +99,6 @@ namespace E.Gardener
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            
-            //initializing ArduinoListener
-            app.ApplicationServices.GetService<Observable>();
         }
     }
 }

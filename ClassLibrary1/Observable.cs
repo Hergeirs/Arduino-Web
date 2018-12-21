@@ -5,38 +5,39 @@ using System.IO.Ports;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 
 namespace ArduinoObserver
 {
 
-    public class Observable : IDisposable, IObservable<ArduinoData>
+    public class Observable :IDisposable, IObservable<ArduinoData>, IHostedService
     {
 
         private const int Port = 8080;
         private readonly TcpListener _socket;
         private List<IObserver<ArduinoData>> Observers { get; set; }
 
-        public Observable(DataPusherObserver dataPusherObserver, Observer observer)
+        public Observable(IServiceProvider serviceProvider)
         {
             //prep
+            
             Observers = new List<IObserver<ArduinoData>>();
             _socket = new TcpListener(IPAddress.Any, Port);
-            Start();
             
             
             // subscribing necessary observers
-            dataPusherObserver.Subscribe(this);
-            observer.Subscribe(this);
-            
-            
+            serviceProvider.GetService<Observer>().Subscribe(this);
+            serviceProvider.GetService<DataPusherObserver>().Subscribe(this);
         }
 
-        public void Start() 
+        public async void Start() 
         {
             _socket.Start();
-            new Thread(new ThreadStart(Listen)).Start();
-
+            new Thread(Listen).Start();
         }
 
         private void Listen() {
@@ -139,6 +140,26 @@ namespace ArduinoObserver
         }
 
 
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+//            Notify(new ArduinoData()
+//            {
+//                PlantId = 1,
+//                Light = 100,
+//                Moisture = 30,
+//                Temperature = 26,
+//                Water = 70
+//                    
+//            });
+            _socket.Start();
+            new Thread(Listen).Start();
+            return Task.CompletedTask;
+        }
 
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            Dispose();
+            return Task.CompletedTask;
+        }
     }
 }

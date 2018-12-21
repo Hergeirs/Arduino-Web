@@ -1,4 +1,4 @@
-@model PartialViewResult
+@model System.Collections.Generic.IEnumerable<Repository.Models.Plant>
 
 @{
     ViewBag.Title = "Your Plants";
@@ -7,4 +7,6 @@
 
 <h2>@ViewBag.Title</h2>
 
-@await Html.PartialAsync("_plants_partial");
+@await Html.PartialAsync("_plants_partial", Model)
+
+
