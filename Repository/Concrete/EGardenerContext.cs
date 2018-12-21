@@ -1,14 +1,16 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Repository.Abstract;
 using Repository.Models;
 
 namespace Repository.Concrete
 {
-    public class EGardenerContext : IdentityDbContext<ApplicationUser,IdentityRole,string>
+    public class EGardenerContext : IdentityDbContext<ApplicationUser,IdentityRole,string>, IEGardenerContext
     {
 
         public EGardenerContext(DbContextOptions options)

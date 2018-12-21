@@ -8,17 +8,14 @@ namespace ArduinoObserver
 {
     public class DataPusherObserver: IObserver<ArduinoData>
     {
+        private readonly IServiceProvider _provider;
         private readonly DataHub _dataHub;
         private IDisposable _unsubscriber;
 
-        public DataPusherObserver(DataHub dataHub)
+        public DataPusherObserver(DataHub dataHub)//, IObservable<ArduinoData> observable)
         {
             _dataHub = dataHub;
-        }
-
-        public DataPusherObserver(IObservable<ArduinoData> observable)
-        {
-            observable.Subscribe(this);
+//            Subscribe(observable);
         }
 
         public virtual void Subscribe(IObservable<ArduinoData> provider)

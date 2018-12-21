@@ -1,22 +1,15 @@
 @model Repository.Models.Plant
 
-<div id="@Model.PlantId">
-    <div class="temperature">
-        <span class="label">Temperature: </span>
-        <span class="value">0</span>
-    </div>
-    <div class="moisture">
-        <span class="label">Moisture: </span>
-        <span class="value">0</span>
-    </div>
-    <div class="water">
-        <span class="label">Water: </span>
-        <span class="value">0</span>
-    </div>
-    <div class="light">
-        <span class="label">Light: </span>
-        <span class="value">0</span>
-    </div>
+<div class="plant" id="@Model.PlantId">
+   <div class="info">
+      <div>PlantId: <span>@Model.PlantId</span></div>
+      <div>DisplayName: <span>@Model.Name</span></div>
+      <div>Date added: <span>@Model.DateAdded</span></div>
+   </div>
+   
+   <div class="data">
+      @await Html.PartialAsync("_arduino_data_partial.cshtml", @Model.Datas.LastOrDefault())
+   </div>
 </div>
 
 

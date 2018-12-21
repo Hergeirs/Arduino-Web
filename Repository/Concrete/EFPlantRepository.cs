@@ -23,22 +23,19 @@ namespace Repository.Concrete
             _userAccessor = userAccessor;
         }
 
-        private Task<ApplicationUser> User()
-        {
-            return _userAccessor.GetUser();
-        }
         
         public async Task<IEnumerable<Plant>> UserPlants()
         {
 
-            var user = await User();
-            var daUser = _context.Users.Include(x => x.Plants).Single(x => x.Id == user.Id);
-            return daUser.Plants;
+            var user = await _userAccessor.User;
+            
+            user = _context.Users.Include(x => x.Plants).ThenInclude(x => x.Datas).Single(x => x.Id == user.Id);
+            return user?.Plants ?? new List<Plant>();
         }
 
         public async Task SavePlant(Plant plant)
         {
-            var user = await User();
+            var user = await _userAccessor.User;
             var dbUser = await _context.Users.FindAsync(user.Id);
 
             plant.ApplicationUser = user;
