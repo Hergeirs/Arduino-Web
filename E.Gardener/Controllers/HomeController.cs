@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Repository;
 using Repository.Abstract;
 using Repository.Concrete;
 using Repository.Models;
@@ -14,15 +15,17 @@ namespace E.Gardener.Controllers
     public class HomeController : Controller
     {
         private readonly IPlantRepository _plantRepository;
+        private readonly IApplicationUserAccessor _userAccessor;
 
-        public HomeController(IPlantRepository repository)
+
+        public HomeController(IPlantRepository repository, IApplicationUserAccessor userAccessor)
         {
-
-           // EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
+            // EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
 
           //  arduinoDataRepository.SaveData(new ArduinoData());
 
             _plantRepository = repository;
+            _userAccessor = userAccessor;
         }
 
 
@@ -41,15 +44,17 @@ namespace E.Gardener.Controllers
             {
                 Name = "hey"
             });
-            return "done";
+            return _plantRepository.UserPlants().ToString();
 
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> About()
         {
             ViewData["Message"] = "Description of your profile";
 
-            return View();
+            var user = await _userAccessor.User;
+
+            return View(user);
         }
 
         public IActionResult Privacy()
