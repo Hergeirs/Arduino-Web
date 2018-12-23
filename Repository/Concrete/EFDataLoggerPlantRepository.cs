@@ -22,9 +22,9 @@ namespace Repository.Concrete
         }
 
 
-        public async void SavePlantData(ArduinoData data)
+        public void SavePlantData(ArduinoData data)
         {
-            var plant = _context.Plants.Include(x => x.Datas).Single(x => x.PlantId == data.PlantId);
+           var plant = _context.Plants.Include(x => x.Datas).Single(x => x.PlantId == data.PlantId);        
             plant.Datas.Add(data);
             _context.SaveChanges();
 

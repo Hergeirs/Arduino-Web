@@ -21,7 +21,8 @@ namespace ArduinoObserver
         {
             _arduinoDataRepository = new EFDataLoggerPlantRepository(new EGardenerContext(
                 new DbContextOptionsBuilder()
-                    .UseSqlServer("Server=127.0.0.1;Database=EGarden;User Id=SA;Password=Password0").Options)
+                   // .UseSqlServer("Server=127.0.0.1;Database=EGarden;User Id=SA;Password=Password0").Options)
+                    .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=E.Gardener;Trusted_Connection=True;MultipleActiveResultSets=true").Options)
             );
         }
 
