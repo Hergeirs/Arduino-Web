@@ -116,6 +116,11 @@ namespace ArduinoObserver
 
         public void Notify(ArduinoData data)
         {
+            if (data.PlantId == 21569)
+            {
+                Console.WriteLine("something something id invalid..-");
+                return;
+            }
             foreach (var observer in Observers)
             {
                 if (data == null)

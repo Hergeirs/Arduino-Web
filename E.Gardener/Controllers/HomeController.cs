@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using ArduinoObserver;
 using Repository;
 using Repository.Abstract;
 using Repository.Concrete;
@@ -15,20 +14,18 @@ namespace E.Gardener.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly Observer _dataLogger;
         private readonly IPlantRepository _plantRepository;
-        private readonly IApplicationUserAccessor userAccessor;
+        private readonly IApplicationUserAccessor _userAccessor;
 
-        public HomeController(Observer logger, IPlantRepository repository, IApplicationUserAccessor userAccessor)
+
+        public HomeController(IPlantRepository repository, IApplicationUserAccessor userAccessor)
         {
-
-           // EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
+            // EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
 
           //  arduinoDataRepository.SaveData(new ArduinoData());
 
-            _dataLogger = logger;
             _plantRepository = repository;
-            this.userAccessor = userAccessor;
+            _userAccessor = userAccessor;
         }
 
 
@@ -55,7 +52,7 @@ namespace E.Gardener.Controllers
         {
             ViewData["Message"] = "Description of your profile";
 
-            var user = await userAccessor.User;
+            var user = await _userAccessor.User;
 
             return View(user);
         }

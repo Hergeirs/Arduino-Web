@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
+using E.Gardener.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Repository.Abstract;
 using Repository.Models;
-
 namespace ArduinoObserver
 {
     public class DataPusherObserver: IObserver<ArduinoData>
