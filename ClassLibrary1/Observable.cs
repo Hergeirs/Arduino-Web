@@ -34,12 +34,6 @@ namespace ArduinoObserver
             serviceProvider.GetService<DataPusherObserver>().Subscribe(this);
         }
 
-        public async void Start() 
-        {
-            _socket.Start();
-            new Thread(Listen).Start();
-        }
-
         private void Listen() {
             while(true) {
                 var client = _socket.AcceptTcpClient();

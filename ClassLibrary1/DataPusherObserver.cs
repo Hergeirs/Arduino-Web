@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using E.Gardener.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Repository.Abstract;
 using Repository.Models;
@@ -8,11 +7,10 @@ namespace ArduinoObserver
 {
     public class DataPusherObserver: IObserver<ArduinoData>
     {
-        private readonly IServiceProvider _provider;
-        private readonly DataHub _dataHub;
+        private readonly IDataHub _dataHub;
         private IDisposable _unsubscriber;
 
-        public DataPusherObserver(DataHub dataHub)//, IObservable<ArduinoData> observable)
+        public DataPusherObserver(IDataHub dataHub)//, IObservable<ArduinoData> observable)
         {
             _dataHub = dataHub;
 //            Subscribe(observable);

@@ -1,13 +1,16 @@
 using ArduinoObserver;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
-public static class MyServiceExtensions 
+namespace E.Gardener.Services
 {
-    public static IServiceCollection AddMyLibrary(this IServiceCollection services)
+    public static class MyServiceExtensions 
     {
-        services.AddTransient<Observer>();
-        services.AddTransient<DataPusherObserver>();
-        services.AddHostedService<Observable>(); 
-        return services;
+        public static void AddObserverLibrary(this IServiceCollection services)
+        {
+            services.TryAddTransient<Observer>();
+            services.TryAddTransient<DataPusherObserver>();
+            services.AddHostedService<Observable>(); 
+        }
     }
 }
