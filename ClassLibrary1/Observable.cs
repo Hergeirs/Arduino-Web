@@ -82,7 +82,6 @@ namespace ArduinoObserver
         }
 
 
-
         public IDisposable Subscribe(IObserver<ArduinoData> observer)
         {
             if (!Observers.Contains(observer))
@@ -120,7 +119,18 @@ namespace ArduinoObserver
                 if (data == null)
                     observer.OnError(new Exception("Notifying corrupt data from arduino"));
                 else
-                    observer.OnNext(data);
+                {
+
+                    try
+                    {
+                        observer.OnNext(data);
+                    }
+                    catch (InvalidOperationException exception)
+                    {
+                        // TODO: ...
+                    }
+
+                }
             }
         }
 
