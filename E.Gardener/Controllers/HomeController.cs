@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using ArduinoObserver;
 using Repository.Abstract;
 using Repository.Concrete;
 using Repository.Models;
@@ -14,17 +13,15 @@ namespace E.Gardener.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly Observer _dataLogger;
         private readonly IPlantRepository _plantRepository;
 
-        public HomeController(Observer logger, IPlantRepository repository)
+        public HomeController(IPlantRepository repository)
         {
 
            // EFArduinoDataRepository arduinoDataRepository = new EFArduinoDataRepository(_context);
 
           //  arduinoDataRepository.SaveData(new ArduinoData());
 
-            _dataLogger = logger;
             _plantRepository = repository;
         }
 

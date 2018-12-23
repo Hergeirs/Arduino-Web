@@ -1,25 +1,28 @@
-"use strict";
-
 const connection = new signalR.HubConnectionBuilder().withUrl("/dataHub").build();
 
 connection.on("UpdateData", function (data) {
     console.log(data);
-    const plantDiv = document.getElementById(data.PlantId);
+    const plantDiv = document.getElementById(data.plantId);
+
+    plantDiv.getElementsByClassName("id")[0]
+        .getElementsByClassName("value")[0]
+        .textContent = data.dataId;
+ 
     plantDiv.getElementsByClassName("temperature")[0]
         .getElementsByClassName("value")[0]
-        .textContent = data.Temperature;
+        .textContent = data.temperature;
 
     plantDiv.getElementsByClassName("moisture")[0]
         .getElementsByClassName("value")[0]
-        .textContent = data.Moisture;
+        .textContent = data.moisture;
 
     plantDiv.getElementsByClassName("light")[0]
         .getElementsByClassName("value")[0]
-        .textContent = data.Light;
+        .textContent = data.light;
 
     plantDiv.getElementsByClassName("water")[0]
         .getElementsByClassName("value")[0]
-        .textContent = data.Water;
+        .textContent = data.water;
 });
 
 connection.start().catch(function (err) {

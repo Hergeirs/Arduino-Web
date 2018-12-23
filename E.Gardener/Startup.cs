@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ArduinoObserver;
+﻿
+using E.Gardener.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -44,13 +41,10 @@ namespace E.Gardener
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             
-            services.AddTransient<Observer>();
-            services.AddTransient<DataPusherObserver>();
-            services.AddHostedService<Observable>();            
+                
             services.AddScoped<IApplicationUserAccessor, ApplicationUserAccessor>();
             services.AddScoped<IPlantRepository, EFPlantRepository>();
             services.AddScoped<IArduinoDataRepository, EFArduinoDataRepository>();
-            services.AddSingleton<DataHub>();
             
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
