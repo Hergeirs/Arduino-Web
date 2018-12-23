@@ -2,7 +2,6 @@
 using System;
 using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +12,6 @@ namespace ArduinoObserver
 {
     public class Observer : IObserver<ArduinoData>, IDisposable
     {
-        private readonly IServiceProvider _serviceCollection;
         private IDisposable _unsubscriber;
         private readonly EFDataLoggerPlantRepository _arduinoDataRepository;
 

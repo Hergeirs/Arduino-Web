@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.SignalR;
 using Repository.Models;
 
-namespace E.Gardener.Hubs
+namespace Hubs.Hubs
 {
     public class DataHub : Hub
     {

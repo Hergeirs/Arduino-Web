@@ -36,15 +36,15 @@ namespace Repository.Concrete
         public async Task SavePlant(Plant plant)
         {
             var user = await _userAccessor.User;
-            var dbUser = await _context.Users.FindAsync(user.Id);
+            var dbUser = await _context.Users.SingleAsync( x => x.Id == user.Id);
 
             plant.ApplicationUser = user;
-            if (dbUser.Plants == null)
+            if (user.Plants == null)
             {
-                dbUser.Plants = new List<Plant>();
+                user.Plants = new List<Plant>();
             }
             
-            dbUser.Plants.Add(plant);
+            user.Plants.Add(plant);
             var amount = await _context.SaveChangesAsync();
         }
     }
