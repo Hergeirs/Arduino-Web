@@ -1,5 +1,3 @@
-using System;
-
 namespace E.Gardener.Models
 {
     public class ErrorViewModel

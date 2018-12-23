@@ -1,9 +1,6 @@
-﻿using System;
-using System.Reflection;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Repository.Abstract;
 using Repository.Models;
 

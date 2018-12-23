@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using E.Gardener.Models;
 using E.Gardener.Services;
 using Hubs.Hubs;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -14,7 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Repository;
 using Repository.Abstract;
 using Repository.Concrete;
-using Repository.Models;
 
 namespace E.Gardener
 {

@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -128,6 +127,7 @@ namespace ArduinoObserver
                     catch (InvalidOperationException exception)
                     {
                         // TODO: ...
+                        Console.WriteLine(exception.Message);
                     }
 
                 }

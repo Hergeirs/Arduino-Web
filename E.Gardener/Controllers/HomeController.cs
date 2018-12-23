@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using E.Gardener.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Repository;
 using Repository.Abstract;
-using Repository.Concrete;
 using Repository.Models;
 
 namespace E.Gardener.Controllers
