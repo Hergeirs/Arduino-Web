@@ -1,16 +1,21 @@
 using System;
+using System.Runtime.Serialization;
+using System.Threading;
+
+using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.DependencyInjection;
 using Repository.Models;
 namespace ArduinoObserver
 {
     public class DataPusherObserver: IObserver<ArduinoData>
     {
-        private readonly IDataHub _dataHub;
+        HubConnection connection;
+
         private IDisposable _unsubscriber;
 
-        public DataPusherObserver(IDataHub dataHub)//, IObservable<ArduinoData> observable)
+        public DataPusherObserver()//, IObservable<ArduinoData> observable)
         {
-            _dataHub = dataHub;
-//            Subscribe(observable);
+            connection = new HubConnectionBuilder().WithUrl("http://localhost:5001/dataHub").Build();
         }
 
         public virtual void Subscribe(IObservable<ArduinoData> provider)
@@ -31,9 +36,11 @@ namespace ArduinoObserver
         }
 
         // This runs when data from arduino is received.
-        public virtual void OnNext(ArduinoData value)
+        public virtual async void OnNext(ArduinoData value)
         {
-            _dataHub.UpdateData(value);
+            await connection.StartAsync();
+            await connection.InvokeAsync("UpdateData", value, CancellationToken.None);
+            await connection.StopAsync();
         }
 
         public virtual void Unsubscribe()

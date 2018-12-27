@@ -1,10 +1,12 @@
 ﻿using Repository.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -14,15 +16,15 @@ namespace ArduinoObserver
 
     public class Observable :IDisposable, IObservable<ArduinoData>, IHostedService
     {
-
         private const int Port = 8080;
         private readonly TcpListener _socket;
         private List<IObserver<ArduinoData>> Observers { get; set; }
 
+     
+        
         public Observable(IServiceProvider serviceProvider)
         {
             //prep
-            
             Observers = new List<IObserver<ArduinoData>>();
             _socket = new TcpListener(IPAddress.Any, Port);
             
@@ -59,7 +61,7 @@ namespace ArduinoObserver
                     data.Light = BitConverter.ToInt32(buffer);
                     data.Water = reader.ReadByte();
                    
-                    Notify(data);//
+                    Notify(ref data);//
                 }
                 Thread.Sleep(1000);
             }
@@ -106,7 +108,7 @@ namespace ArduinoObserver
             }
         }
 
-        public void Notify(ArduinoData data)
+        public void Notify(ref ArduinoData data)
         {
             if (data.PlantId == 21569)
             {

@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.SignalR;
+using Repository.Concrete;
 using Repository.Models;
 
-namespace Hubs.Hubs
+namespace E.Gardener.Hubs
 {
     public class DataHub : Hub
     {
         public async void UpdateData(ArduinoData data)
         {
             var clients = Clients;
-            if (clients == null) return;
-            
+            if (clients == null) return;   
             await clients.All.SendAsync("UpdateData", data);
         }
     }

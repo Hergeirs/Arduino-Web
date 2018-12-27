@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using System.Net;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace E.Gardener
@@ -11,7 +12,17 @@ namespace E.Gardener
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+            WebHost.CreateDefaultBuilder(args).UseKestrel(options =>
+                {
+                    // Configure the Url and ports to bind to
+                    // This overrides calls to UseUrls and the ASPNETCORE_URLS environment variable, but will be 
+                    // overridden if you call UseIisIntegration() and host behind IIS/IIS Express
+                    options.Listen(IPAddress.Loopback, 5001);
+                    options.Listen(IPAddress.Loopback, 5000, listenOptions =>
+                    {
+                        listenOptions.UseHttps("localhost.pfx", "Password0");
+                    });
+                })
 //                .UseDefaultServiceProvider(options =>options.ValidateScopes = false)
                 .UseStartup<Startup>();
         
