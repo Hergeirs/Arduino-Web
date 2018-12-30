@@ -1,6 +1,6 @@
 const connection = new signalR.HubConnectionBuilder().withUrl("/dataHub").build();
 
-connection.on("UpdateData", function (data) {
+    connection.on("UpdateData", function (data) {
     console.log(data);
     const plantDiv = document.getElementById(data.plantId);
 
@@ -23,8 +23,10 @@ connection.on("UpdateData", function (data) {
     plantDiv.getElementsByClassName("water")[0]
         .getElementsByClassName("value")[0]
         .textContent = data.water;
+    AddToChart(plantDiv.getElementsByClassName("chart")[0],data)
 });
 
 connection.start().catch(function (err) {
     return console.error(err.toString());
 });
+

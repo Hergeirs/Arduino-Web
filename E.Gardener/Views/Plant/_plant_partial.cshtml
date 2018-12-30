@@ -9,6 +9,7 @@
    
    <div class="data">
       @await Html.PartialAsync("_arduino_data_partial.cshtml", @Model.Datas.LastOrDefault())
+      @await Html.PartialAsync("_data_chart_partial",@Model);
    </div>
 </div>
 

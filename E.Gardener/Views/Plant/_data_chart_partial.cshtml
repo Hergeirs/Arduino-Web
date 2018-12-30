@@ -1,0 +1,33 @@
+@using Repository.Models
+@model Plant
+
+@{
+    var data = new ArduinoDataSeperate(@Model.Datas.TakeLast(5));
+}
+
+<style>
+    .chart {
+        width: 400px;
+        height: 400px;
+        border: 1px solid #ddd;
+        padding:1px;
+        -ms-border-radius: 4px;
+        border-radius: 4px
+    }
+</style>
+<canvas class="chart"></canvas>
+
+<script src="~/js/chart.js"></script>
+<script src="~/js/DataChart.js"></script>
+
+<script>
+    function AddChart() {
+        CreateChart(document.getElementById(@Model.PlantId).getElementsByClassName("chart")[0], @Html.Raw(Json.Serialize(data)));    
+    }
+    window.addEventListener("load",AddChart,false);
+   
+</script>
+
+
+
+

@@ -24,7 +24,7 @@ namespace Repository.Concrete
 
             var user = await _userAccessor.User;
             
-            user = _context.Users.Include(x => x.Plants).ThenInclude(x => x.Datas).Single(x => x.Id == user.Id);
+            user = await _context.Users.Include(x => x.Plants).ThenInclude(x => x.Datas).SingleAsync(x => x.Id == user.Id);
             return user?.Plants ?? new List<Plant>();
         }
 
@@ -40,7 +40,7 @@ namespace Repository.Concrete
             }
             
             user.Plants.Add(plant);
-            var amount = await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -1,0 +1,12 @@
+@model Repository.Models.Plant
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Add a plant:</h2>
+@using(@Html.BeginForm()) {
+    @Html.EditorForModel()
+    <input value="Legg Avtrat" type="submit"/>
+}

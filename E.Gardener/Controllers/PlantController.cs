@@ -1,7 +1,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.EntityFrameworkCore;
 using Repository.Abstract;
+using Repository.Models;
 
 namespace E.Gardener.Controllers
 {
@@ -20,6 +23,18 @@ namespace E.Gardener.Controllers
         {
             
             return View(await _repository.UserPlants());
+        }
+
+
+        public async Task<IActionResult> Add(Plant plant)
+        {
+            if (plant != null && ModelState.IsValid)
+            {
+                await _repository.SavePlant(plant);
+                return await Index();
+            }   
+            return View(plant);
+            
         }
 
 
