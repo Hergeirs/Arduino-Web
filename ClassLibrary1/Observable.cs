@@ -61,7 +61,7 @@ namespace ArduinoObserver
                     data.Light = BitConverter.ToInt32(buffer);
                     data.Water = reader.ReadByte();
                    
-                    Notify(ref data);//
+                    Notify(data);//
                 }
                 Thread.Sleep(1000);
             }
@@ -108,7 +108,7 @@ namespace ArduinoObserver
             }
         }
 
-        public void Notify(ref ArduinoData data)
+        public void Notify(ArduinoData data)
         {
             if (data.PlantId == 21569)
             {
