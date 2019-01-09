@@ -14,6 +14,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="2.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.1.1.0"/>
       
       
 
@@ -23,14 +25,5 @@
     <Folder Include="Migrations" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Mvc.DataAnnotations, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
-      <HintPath>..\..\..\..\.nuget\packages\microsoft.aspnetcore.mvc.dataannotations\2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.DataAnnotations.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>..\..\..\..\.nuget\packages\newtonsoft.json\11.0.2\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-    
  
 </Project>

@@ -20,7 +20,7 @@ namespace E.Gardener
                     options.Listen(IPAddress.Loopback, 5001);
                     options.Listen(IPAddress.Loopback, 5000, listenOptions =>
                     {
-                        listenOptions.UseHttps("localhost.pfx", "Password0");
+                        listenOptions.UseHttps("localhost.crt", "Password0");
                     });
                 })
 //                .UseDefaultServiceProvider(options =>options.ValidateScopes = false)
